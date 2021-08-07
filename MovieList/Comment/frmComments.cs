@@ -39,7 +39,7 @@ namespace MovieList
             using (UnitOfWork db = new UnitOfWork())
             {
                 dgvComment.AutoGenerateColumns = false;
-                dgvComment.DataSource = db.MovieList.getAllComment(MovieId);
+                dgvComment.DataSource = db.MovieList.GetAllComment(MovieId);
             }
         }
     }

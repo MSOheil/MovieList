@@ -61,31 +61,31 @@ namespace MovieList
                 List<MovieModel> result = new List<MovieModel>();
                 if (txtFilterByName.Text != "")
                 {
-                    result = db.MovieList.getMovieByName(txtFilterByName.Text).ToList();
+                    result = db.MovieList.GetMovieByName(txtFilterByName.Text).ToList();
                 }
                 if (txtFilterByGeneres.Text != "")
                 {
-                    result = db.MovieList.getMovieByGenresName(txtFilterByGeneres.Text).ToList();
+                    result = db.MovieList.GetMovieByGenresName(txtFilterByGeneres.Text).ToList();
                 }
                 if (fromDate.Text != "    /  /")
                 {
                     startDate = Convert.ToDateTime(fromDate.Text);
-                    result = db.MovieList.getAllMoveWithStarttDate(startDate.Value);
+                    result = db.MovieList.GetAllMoveWithStarttDate(startDate.Value);
                 }
                 if (toDate.Text != "    /  /")
                 {
                     endDate = Convert.ToDateTime(toDate.Text);
-                    result = db.MovieList.getAllMoveWithEndDate(endDate.Value);
+                    result = db.MovieList.GetAllMoveWithEndDate(endDate.Value);
                 }
                 if (txtRat.Text != "")
                 {
                     if (Convert.ToInt32(txtRat.Text) <= 5)
                     {
-                        result = db.MovieList.getAllWithLowRat(Convert.ToInt32(txtRat.Text)).ToList();
+                        result = db.MovieList.GetAllWithLowRat(Convert.ToInt32(txtRat.Text)).ToList();
                     }
                     if (Convert.ToInt32(txtRat.Text) > 5)
                     {
-                        result = db.MovieList.getAllWithUpRat(Convert.ToInt32(txtRat.Text)).ToList();
+                        result = db.MovieList.GetAllWithUpRat(Convert.ToInt32(txtRat.Text)).ToList();
                     }
                 }
                 dgvListMovie.DataSource = result;
@@ -105,7 +105,7 @@ namespace MovieList
         {
             using (UnitOfWork db = new UnitOfWork())
             {
-                dgvListMovie.DataSource = db.MovieList.getAllMovie();
+                dgvListMovie.DataSource = db.MovieList.GetAllMovie();
 
             }
         }
@@ -119,11 +119,11 @@ namespace MovieList
 
                 if (checkboxProduction.Checked)
                 {
-                    dgvListMovie.DataSource = db.MovieList.sortedByProductionDate();
+                    dgvListMovie.DataSource = db.MovieList.SortedByProductionDate();
                 }
                 if (checkBoxRat.Checked)
                 {
-                    dgvListMovie.DataSource = db.MovieList.sortedByAverageRat();
+                    dgvListMovie.DataSource = db.MovieList.SortedByAverageRat();
 
                 }
             }
@@ -134,7 +134,7 @@ namespace MovieList
             var MoviId = Convert.ToInt32(dgvListMovie.CurrentRow.Cells[0].Value.ToString());
             using (UnitOfWork db = new UnitOfWork())
             {
-                db.MovieList.deleteMovie(MoviId);
+                db.MovieList.DeleteMovie(MoviId);
                 db.Save();
 
             }
@@ -145,7 +145,7 @@ namespace MovieList
             using (UnitOfWork db = new UnitOfWork())
             {
                 dgvListMovie.AutoGenerateColumns = false;
-                dgvListMovie.DataSource = db.MovieList.getAllMovie();
+                dgvListMovie.DataSource = db.MovieList.GetAllMovie();
             }
         }
     }

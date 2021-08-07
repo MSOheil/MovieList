@@ -10,25 +10,25 @@ namespace Movie.DataLayer.Repositories
    public interface IMovieList
     {
 
-        IEnumerable<MovieModel> getMovieByName(string parametr);
-        IEnumerable<MovieModel> getMovieByGenresName(string parametr);
-        IEnumerable<MovieModel> getAllWithUpRat(int parametr);
-        IEnumerable<MovieModel> getAllWithLowRat(int parametr);
-        IEnumerable<MovieModel> sortedByAverageRat();
-        IEnumerable<MovieModel> sortedByProductionDate();
-        IEnumerable<MovieModel> getAllMovie();
-        List<MovieModel> getAllMoveWithStarttDate(DateTime parametr);
-        List<MovieModel> getAllMoveWithEndDate(DateTime parametr);
-        List<double> getRat();
-        List<CommentView> getAllComment(int movieId);
-        bool insertMovie(MovieModel movieModel);
-        bool insertComment(CommentModel comment);
-        bool deleteMovie(MovieModel movieModel);
-        bool deleteMovie(int movieId);
-        bool upDateMovie(MovieModel movie);
-        string findNameById(int movieId);
-        MovieModel findById(int movieId);
-        CommentModel findByIdComment(int movieId);
+        IEnumerable<MovieModel> GetMovieByName(string parametr);
+        IEnumerable<MovieModel> GetMovieByGenresName(string parametr);
+        IEnumerable<MovieModel> GetAllWithUpRat(int parametr);
+        IEnumerable<MovieModel> GetAllWithLowRat(int parametr);
+        IEnumerable<MovieModel> SortedByAverageRat();
+        IEnumerable<MovieModel> SortedByProductionDate();
+        IEnumerable<MovieModel> GetAllMovie();
+        List<MovieModel> GetAllMoveWithStarttDate(DateTime parametr);
+        List<MovieModel> GetAllMoveWithEndDate(DateTime parametr);
+        List<double> GetRat();
+        List<CommentView> GetAllComment(int movieId);
+        bool InsertMovie(MovieModel movieModel);
+        bool InsertComment(CommentModel comment);
+        bool DeleteMovie(MovieModel movieModel);
+        bool DeleteMovie(int movieId);
+        bool UpDateMovie(MovieModel movie);
+        string FindNameById(int movieId);
+        MovieModel FindById(int movieId);
+        CommentModel FindByIdComment(int movieId);
 
     }
 }

@@ -38,7 +38,7 @@ namespace MovieList
                 using (UnitOfWork db = new UnitOfWork())
                 {
 
-                    db.MovieList.upDateMovie(EditMovie);
+                    db.MovieList.UpDateMovie(EditMovie);
                     db.Save();
                 }
                 DialogResult = DialogResult.OK;
@@ -58,7 +58,7 @@ namespace MovieList
                     };
                     using (UnitOfWork db = new UnitOfWork())
                     {
-                        db.MovieList.insertMovie(movie);
+                        db.MovieList.InsertMovie(movie);
                         db.Save();
                     }
                     DialogResult = DialogResult.OK;
@@ -100,7 +100,7 @@ namespace MovieList
                 this.Text = "ویرایش فیلم";
                 using (UnitOfWork db = new UnitOfWork())
                 {
-                    var movie = db.MovieList.findById(MovieId);
+                    var movie = db.MovieList.FindById(MovieId);
                     txtDirectorName.Text = movie.DirectorName;
                     txtGenresName.Text = movie.Generes;
                     txtMovieName.Text = movie.MovieName;

@@ -18,7 +18,7 @@ namespace Movie.DataLayer.Servicess
             _db = context;
         }
 
-        public bool deleteMovie(MovieModel movieModel)
+        public bool DeleteMovie(MovieModel movieModel)
         {
             try
             {
@@ -31,13 +31,13 @@ namespace Movie.DataLayer.Servicess
             }
         }
 
-        public bool deleteMovie(int movieId)
+        public bool DeleteMovie(int movieId)
         {
             try
             {
                 
-                var movie = findById(movieId);
-                deleteMovie(movie);
+                var movie = FindById(movieId);
+                DeleteMovie(movie);
                 return true;
             }
             catch
@@ -46,23 +46,23 @@ namespace Movie.DataLayer.Servicess
             }
         }
 
-        public MovieModel findById(int movieId)
+        public MovieModel FindById(int movieId)
         {
             return _db.MovieModels.Find(movieId);
 
         }
 
-        public CommentModel findByIdComment(int movieId)
+        public CommentModel FindByIdComment(int movieId)
         {
             return _db.CommentModels.Find(movieId);
         }
 
-        public string findNameById(int movieId)
+        public string FindNameById(int movieId)
         {
             return _db.MovieModels.Find(movieId).MovieName;
         }
 
-        public List<CommentView> getAllComment(int movieId)
+        public List<CommentView> GetAllComment(int movieId)
         {
             return _db.CommentModels.Where(sa => sa.MovieId == movieId).Select(sc => new CommentView
             {
@@ -72,47 +72,47 @@ namespace Movie.DataLayer.Servicess
             }).ToList();
         }
 
-        public List<MovieModel> getAllMoveWithEndDate(DateTime parametr)
+        public List<MovieModel> GetAllMoveWithEndDate(DateTime parametr)
         {
             return _db.MovieModels.Where(dt => dt.DateProduction <= parametr).ToList();
         }
 
-        public List<MovieModel> getAllMoveWithStarttDate(DateTime parametr)
+        public List<MovieModel> GetAllMoveWithStarttDate(DateTime parametr)
         {
             return _db.MovieModels.Where(td => td.DateProduction >= parametr).ToList();
         }
 
-        public IEnumerable<MovieModel> getAllMovie()
+        public IEnumerable<MovieModel> GetAllMovie()
         {
             return _db.MovieModels.ToList();
         }
 
-        public IEnumerable<MovieModel> getAllWithLowRat(int parametr)
+        public IEnumerable<MovieModel> GetAllWithLowRat(int parametr)
         {
             return _db.MovieModels.Where(ra => ra.AverageRat <= parametr).ToList();
         }
 
-        public IEnumerable<MovieModel> getAllWithUpRat(int parametr)
+        public IEnumerable<MovieModel> GetAllWithUpRat(int parametr)
         {
             return _db.MovieModels.Where(ra => ra.AverageRat >= parametr).ToList();
         }
 
-        public IEnumerable<MovieModel> getMovieByGenresName(string parametr)
+        public IEnumerable<MovieModel> GetMovieByGenresName(string parametr)
         {
             return _db.MovieModels.Where(am => am.Generes == parametr).ToList();
         }
 
-        public IEnumerable<MovieModel> getMovieByName(string parametr)
+        public IEnumerable<MovieModel> GetMovieByName(string parametr)
         {
             return _db.MovieModels.Where(mv => mv.MovieName == parametr).ToList();
         }
 
-        public List<double> getRat()
+        public List<double> GetRat()
         {
             return _db.MovieModels.Select(sa => sa.AverageRat).ToList();
         }
 
-        public bool insertComment(CommentModel comment)
+        public bool InsertComment(CommentModel comment)
         {
             try
             {
@@ -125,7 +125,7 @@ namespace Movie.DataLayer.Servicess
             }
         }
 
-        public bool insertMovie(MovieModel movieModel)
+        public bool InsertMovie(MovieModel movieModel)
         {
             try
             {
@@ -138,17 +138,17 @@ namespace Movie.DataLayer.Servicess
             }
         }
 
-        public IEnumerable<MovieModel> sortedByAverageRat()
+        public IEnumerable<MovieModel> SortedByAverageRat()
         {
             return _db.MovieModels.OrderBy(sa => sa.AverageRat).ToList();
         }
 
-        public IEnumerable<MovieModel> sortedByProductionDate()
+        public IEnumerable<MovieModel> SortedByProductionDate()
         {
             return _db.MovieModels.OrderBy(sa => sa.DateProduction).ToList();
         }
 
-        public bool upDateMovie(MovieModel movie)
+        public bool UpDateMovie(MovieModel movie)
         {
             try
             {

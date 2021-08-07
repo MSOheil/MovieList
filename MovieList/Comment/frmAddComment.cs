@@ -33,7 +33,7 @@ namespace MovieList
                 };
                 using (UnitOfWork db=new UnitOfWork())
                 {
-                    db.MovieList.insertComment(comment);
+                    db.MovieList.InsertComment(comment);
                     db.Save();
                     DialogResult = DialogResult.OK;
                 }
