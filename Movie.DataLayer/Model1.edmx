@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MovieContext_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CommentModel">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CommentName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="CommentRat" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="MovieId" Type="int" Nullable="false" />
+          <Property Name="CommentDescription" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MovieModel">
+          <Key>
+            <PropertyRef Name="MovieID" />
+          </Key>
+          <Property Name="MovieID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MovieName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="DirectorName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="DateProduction" Type="datetime" Nullable="false" />
+          <Property Name="AverageRat" Type="int" Nullable="false" />
+          <Property Name="Generes" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CommentModel_MovieModel">
+          <End Role="MovieModel" Type="Self.MovieModel" Multiplicity="1" />
+          <End Role="CommentModel" Type="Self.CommentModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MovieModel">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="CommentModel">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MovieContext_DBModelStoreContainer">
+          <EntitySet Name="CommentModel" EntityType="Self.CommentModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MovieModel" EntityType="Self.MovieModel" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CommentModel_MovieModel" Association="Self.FK_CommentModel_MovieModel">
+            <End Role="MovieModel" EntitySet="MovieModel" />
+            <End Role="CommentModel" EntitySet="CommentModel" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MovieContext_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CommentModel">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CommentName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CommentRat" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MovieId" Type="Int32" Nullable="false" />
+          <Property Name="CommentDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MovieModel" Relationship="Self.FK_CommentModel_MovieModel" FromRole="CommentModel" ToRole="MovieModel" />
+        </EntityType>
+        <EntityType Name="MovieModel">
+          <Key>
+            <PropertyRef Name="MovieID" />
+          </Key>
+          <Property Name="MovieID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MovieName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DirectorName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateProduction" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AverageRat" Type="Int32" Nullable="false" />
+          <Property Name="Generes" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CommentModels" Relationship="Self.FK_CommentModel_MovieModel" FromRole="MovieModel" ToRole="CommentModel" />
+        </EntityType>
+        <Association Name="FK_CommentModel_MovieModel">
+          <End Role="MovieModel" Type="Self.MovieModel" Multiplicity="1" />
+          <End Role="CommentModel" Type="Self.CommentModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MovieModel">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="CommentModel">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MovieContext_DBEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CommentModels" EntityType="Self.CommentModel" />
+          <EntitySet Name="MovieModels" EntityType="Self.MovieModel" />
+          <AssociationSet Name="FK_CommentModel_MovieModel" Association="Self.FK_CommentModel_MovieModel">
+            <End Role="MovieModel" EntitySet="MovieModels" />
+            <End Role="CommentModel" EntitySet="CommentModels" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MovieContext_DBModelStoreContainer" CdmEntityContainer="MovieContext_DBEntities3">
+          <EntitySetMapping Name="CommentModels">
+            <EntityTypeMapping TypeName="MovieContext_DBModel.CommentModel">
+              <MappingFragment StoreEntitySet="CommentModel">
+                <ScalarProperty Name="CommentID" ColumnName="CommentID" />
+                <ScalarProperty Name="CommentName" ColumnName="CommentName" />
+                <ScalarProperty Name="CommentRat" ColumnName="CommentRat" />
+                <ScalarProperty Name="MovieId" ColumnName="MovieId" />
+                <ScalarProperty Name="CommentDescription" ColumnName="CommentDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MovieModels">
+            <EntityTypeMapping TypeName="MovieContext_DBModel.MovieModel">
+              <MappingFragment StoreEntitySet="MovieModel">
+                <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+                <ScalarProperty Name="MovieName" ColumnName="MovieName" />
+                <ScalarProperty Name="DirectorName" ColumnName="DirectorName" />
+                <ScalarProperty Name="DateProduction" ColumnName="DateProduction" />
+                <ScalarProperty Name="AverageRat" ColumnName="AverageRat" />
+                <ScalarProperty Name="Generes" ColumnName="Generes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
