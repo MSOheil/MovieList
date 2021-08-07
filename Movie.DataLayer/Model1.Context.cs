@@ -13,10 +13,10 @@ namespace Movie.DataLayer
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MovieContext_DBEntities3 : DbContext
+    public partial class MovieContext_DBEntities1 : DbContext
     {
-        public MovieContext_DBEntities3()
-            : base("name=MovieContext_DBEntities3")
+        public MovieContext_DBEntities1()
+            : base("name=MovieContext_DBEntities1")
         {
         }
     

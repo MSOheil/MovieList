@@ -54,7 +54,7 @@ namespace MovieList
                         DirectorName = txtDirectorName.Text,
                         Generes = txtGenresName.Text,
                         DateProduction = Convert.ToDateTime(txtProductionDateMovie.Text),
-                        AverageRat = int.Parse(txtRatMovie.Text)
+                        AverageRat = Convert.ToDouble(txtRatMovie.Text)
                     };
                     using (UnitOfWork db = new UnitOfWork())
                     {
@@ -64,7 +64,7 @@ namespace MovieList
                     DialogResult = DialogResult.OK;
                 }
             }
-            
+
 
 
         }
@@ -109,6 +109,6 @@ namespace MovieList
                 }
             }
         }
-        
+
     }
 }

@@ -12,8 +12,8 @@ namespace Movie.DataLayer.Servicess
 {
     public class MovieList : IMovieList
     {
-        private MovieContext_DBEntities3 _db;
-        public MovieList(MovieContext_DBEntities3 context)
+        private MovieContext_DBEntities1 _db;
+        public MovieList(MovieContext_DBEntities1 context)
         {
             _db = context;
         }
@@ -107,7 +107,7 @@ namespace Movie.DataLayer.Servicess
             return _db.MovieModels.Where(mv => mv.MovieName == parametr).ToList();
         }
 
-        public List<int> getRat()
+        public List<double> getRat()
         {
             return _db.MovieModels.Select(sa => sa.AverageRat).ToList();
         }

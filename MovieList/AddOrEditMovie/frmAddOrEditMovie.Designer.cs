@@ -68,7 +68,7 @@ namespace MovieList
             this.txtProductionDateMovie.Location = new System.Drawing.Point(6, 95);
             this.txtProductionDateMovie.Mask = "0000/00/00";
             this.txtProductionDateMovie.Name = "txtProductionDateMovie";
-            this.txtProductionDateMovie.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtProductionDateMovie.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtProductionDateMovie.Size = new System.Drawing.Size(406, 20);
             this.txtProductionDateMovie.TabIndex = 11;
             this.txtProductionDateMovie.ValidatingType = typeof(System.DateTime);

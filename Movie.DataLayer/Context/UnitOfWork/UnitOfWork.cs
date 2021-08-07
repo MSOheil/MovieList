@@ -9,20 +9,23 @@ using System.Threading.Tasks;
 
 namespace Movie.DataLayer.Data
 {
-   public class UnitOfWork:IDisposable
+    public class UnitOfWork : IDisposable
     {
 
-        MovieContext_DBEntities3 db = new MovieContext_DBEntities3();
+        MovieContext_DBEntities1 db = new MovieContext_DBEntities1();
         private IMovieList _movieList;
-        public IMovieList MovieList { get
+        public IMovieList MovieList
+        {
+            get
             {
                 if (_movieList == null)
                 {
                     _movieList = new MovieList(db);
                 }
                 return _movieList;
-            
-            } }
+
+            }
+        }
 
 
         public void Save()

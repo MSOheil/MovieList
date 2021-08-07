@@ -21,5 +21,6 @@ namespace Movie.DataLayer
         public string CommentDescription { get; set; }
     
         public virtual MovieModel MovieModel { get; set; }
+        public virtual MovieModel MovieModel1 { get; set; }
     }
 }

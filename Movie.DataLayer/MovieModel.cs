@@ -18,16 +18,19 @@ namespace Movie.DataLayer
         public MovieModel()
         {
             this.CommentModels = new HashSet<CommentModel>();
+            this.CommentModels1 = new HashSet<CommentModel>();
         }
     
         public int MovieID { get; set; }
         public string MovieName { get; set; }
         public string DirectorName { get; set; }
         public System.DateTime DateProduction { get; set; }
-        public int AverageRat { get; set; }
+        public double AverageRat { get; set; }
         public string Generes { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CommentModel> CommentModels { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CommentModel> CommentModels1 { get; set; }
     }
 }

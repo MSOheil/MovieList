@@ -19,7 +19,7 @@ namespace Movie.DataLayer.Repositories
         IEnumerable<MovieModel> getAllMovie();
         List<MovieModel> getAllMoveWithStarttDate(DateTime parametr);
         List<MovieModel> getAllMoveWithEndDate(DateTime parametr);
-        List<int> getRat();
+        List<double> getRat();
         List<CommentView> getAllComment(int movieId);
         bool insertMovie(MovieModel movieModel);
         bool insertComment(CommentModel comment);

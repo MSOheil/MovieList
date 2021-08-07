@@ -23,10 +23,24 @@
           <Property Name="MovieName" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="DirectorName" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="DateProduction" Type="datetime" Nullable="false" />
-          <Property Name="AverageRat" Type="int" Nullable="false" />
+          <Property Name="AverageRat" Type="float" Nullable="false" />
           <Property Name="Generes" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <Association Name="FK_CommentModel_MovieModel">
+          <End Role="MovieModel" Type="Self.MovieModel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CommentModel" Type="Self.CommentModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MovieModel">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="CommentModel">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommentModel_MovieModel1">
           <End Role="MovieModel" Type="Self.MovieModel" Multiplicity="1" />
           <End Role="CommentModel" Type="Self.CommentModel" Multiplicity="*" />
           <ReferentialConstraint>
@@ -42,6 +56,10 @@
           <EntitySet Name="CommentModel" EntityType="Self.CommentModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MovieModel" EntityType="Self.MovieModel" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CommentModel_MovieModel" Association="Self.FK_CommentModel_MovieModel">
+            <End Role="MovieModel" EntitySet="MovieModel" />
+            <End Role="CommentModel" EntitySet="CommentModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommentModel_MovieModel1" Association="Self.FK_CommentModel_MovieModel1">
             <End Role="MovieModel" EntitySet="MovieModel" />
             <End Role="CommentModel" EntitySet="CommentModel" />
           </AssociationSet>
@@ -61,6 +79,7 @@
           <Property Name="MovieId" Type="Int32" Nullable="false" />
           <Property Name="CommentDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="MovieModel" Relationship="Self.FK_CommentModel_MovieModel" FromRole="CommentModel" ToRole="MovieModel" />
+          <NavigationProperty Name="MovieModel1" Relationship="Self.FK_CommentModel_MovieModel1" FromRole="CommentModel" ToRole="MovieModel" />
         </EntityType>
         <EntityType Name="MovieModel">
           <Key>
@@ -70,11 +89,26 @@
           <Property Name="MovieName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DirectorName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DateProduction" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="AverageRat" Type="Int32" Nullable="false" />
+          <Property Name="AverageRat" Type="Double" Nullable="false" />
           <Property Name="Generes" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="CommentModels" Relationship="Self.FK_CommentModel_MovieModel" FromRole="MovieModel" ToRole="CommentModel" />
+          <NavigationProperty Name="CommentModels1" Relationship="Self.FK_CommentModel_MovieModel1" FromRole="MovieModel" ToRole="CommentModel" />
         </EntityType>
         <Association Name="FK_CommentModel_MovieModel">
+          <End Role="MovieModel" Type="Self.MovieModel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CommentModel" Type="Self.CommentModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MovieModel">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="CommentModel">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommentModel_MovieModel1">
           <End Role="MovieModel" Type="Self.MovieModel" Multiplicity="1" />
           <End Role="CommentModel" Type="Self.CommentModel" Multiplicity="*" />
           <ReferentialConstraint>
@@ -86,10 +120,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="MovieContext_DBEntities3" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="MovieContext_DBEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CommentModels" EntityType="Self.CommentModel" />
           <EntitySet Name="MovieModels" EntityType="Self.MovieModel" />
           <AssociationSet Name="FK_CommentModel_MovieModel" Association="Self.FK_CommentModel_MovieModel">
+            <End Role="MovieModel" EntitySet="MovieModels" />
+            <End Role="CommentModel" EntitySet="CommentModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommentModel_MovieModel1" Association="Self.FK_CommentModel_MovieModel1">
             <End Role="MovieModel" EntitySet="MovieModels" />
             <End Role="CommentModel" EntitySet="CommentModels" />
           </AssociationSet>
@@ -99,7 +137,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MovieContext_DBModelStoreContainer" CdmEntityContainer="MovieContext_DBEntities3">
+        <EntityContainerMapping StorageEntityContainer="MovieContext_DBModelStoreContainer" CdmEntityContainer="MovieContext_DBEntities1">
           <EntitySetMapping Name="CommentModels">
             <EntityTypeMapping TypeName="MovieContext_DBModel.CommentModel">
               <MappingFragment StoreEntitySet="CommentModel">
