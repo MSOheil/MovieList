@@ -30,6 +30,9 @@ namespace MovieList
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.sortByCheckBox = new System.Windows.Forms.Button();
+            this.checkboxProduction = new System.Windows.Forms.CheckBox();
+            this.checkBoxRat = new System.Windows.Forms.CheckBox();
             this.listAllMovie = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -53,9 +56,6 @@ namespace MovieList
             this.DateProduction = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AverageRat = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Generes = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.checkBoxRat = new System.Windows.Forms.CheckBox();
-            this.checkboxProduction = new System.Windows.Forms.CheckBox();
-            this.sortByCheckBox = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListMovie)).BeginInit();
@@ -86,6 +86,36 @@ namespace MovieList
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "مدیریت فیلم";
+            // 
+            // sortByCheckBox
+            // 
+            this.sortByCheckBox.Location = new System.Drawing.Point(106, 53);
+            this.sortByCheckBox.Name = "sortByCheckBox";
+            this.sortByCheckBox.Size = new System.Drawing.Size(75, 23);
+            this.sortByCheckBox.TabIndex = 16;
+            this.sortByCheckBox.Text = "مرتب سازی";
+            this.sortByCheckBox.UseVisualStyleBackColor = true;
+            this.sortByCheckBox.Click += new System.EventHandler(this.sortByCheckBox_Click);
+            // 
+            // checkboxProduction
+            // 
+            this.checkboxProduction.AutoSize = true;
+            this.checkboxProduction.Location = new System.Drawing.Point(398, 59);
+            this.checkboxProduction.Name = "checkboxProduction";
+            this.checkboxProduction.Size = new System.Drawing.Size(76, 17);
+            this.checkboxProduction.TabIndex = 15;
+            this.checkboxProduction.Text = "تاریخ تولید";
+            this.checkboxProduction.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxRat
+            // 
+            this.checkBoxRat.AutoSize = true;
+            this.checkBoxRat.Location = new System.Drawing.Point(207, 59);
+            this.checkBoxRat.Name = "checkBoxRat";
+            this.checkBoxRat.Size = new System.Drawing.Size(51, 17);
+            this.checkBoxRat.TabIndex = 14;
+            this.checkBoxRat.Text = "امتیاز";
+            this.checkBoxRat.UseVisualStyleBackColor = true;
             // 
             // listAllMovie
             // 
@@ -204,11 +234,11 @@ namespace MovieList
             // 
             // btnAddMovie
             // 
-            this.btnAddMovie.Location = new System.Drawing.Point(956, 19);
+            this.btnAddMovie.Location = new System.Drawing.Point(876, 53);
             this.btnAddMovie.Name = "btnAddMovie";
-            this.btnAddMovie.Size = new System.Drawing.Size(75, 23);
+            this.btnAddMovie.Size = new System.Drawing.Size(152, 23);
             this.btnAddMovie.TabIndex = 0;
-            this.btnAddMovie.Text = "افزودن فیلم جدید";
+            this.btnAddMovie.Text = "افزودن فیلم جدید و ویرایش فیلم";
             this.btnAddMovie.UseVisualStyleBackColor = true;
             this.btnAddMovie.Click += new System.EventHandler(this.btnAddMovie_Click);
             // 
@@ -293,36 +323,6 @@ namespace MovieList
             this.Generes.HeaderText = "ژانر";
             this.Generes.Name = "Generes";
             this.Generes.ReadOnly = true;
-            // 
-            // checkBoxRat
-            // 
-            this.checkBoxRat.AutoSize = true;
-            this.checkBoxRat.Location = new System.Drawing.Point(207, 59);
-            this.checkBoxRat.Name = "checkBoxRat";
-            this.checkBoxRat.Size = new System.Drawing.Size(51, 17);
-            this.checkBoxRat.TabIndex = 14;
-            this.checkBoxRat.Text = "امتیاز";
-            this.checkBoxRat.UseVisualStyleBackColor = true;
-            // 
-            // checkboxProduction
-            // 
-            this.checkboxProduction.AutoSize = true;
-            this.checkboxProduction.Location = new System.Drawing.Point(398, 59);
-            this.checkboxProduction.Name = "checkboxProduction";
-            this.checkboxProduction.Size = new System.Drawing.Size(76, 17);
-            this.checkboxProduction.TabIndex = 15;
-            this.checkboxProduction.Text = "تاریخ تولید";
-            this.checkboxProduction.UseVisualStyleBackColor = true;
-            // 
-            // sortByCheckBox
-            // 
-            this.sortByCheckBox.Location = new System.Drawing.Point(106, 53);
-            this.sortByCheckBox.Name = "sortByCheckBox";
-            this.sortByCheckBox.Size = new System.Drawing.Size(75, 23);
-            this.sortByCheckBox.TabIndex = 16;
-            this.sortByCheckBox.Text = "مرتب سازی";
-            this.sortByCheckBox.UseVisualStyleBackColor = true;
-            this.sortByCheckBox.Click += new System.EventHandler(this.sortByCheckBox_Click);
             // 
             // Form1
             // 

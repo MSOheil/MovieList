@@ -149,5 +149,19 @@ namespace Movie.DataLayer.Servicess
         {
             return _db.MovieModels.OrderBy(sa => sa.DateProduction).ToList();
         }
+
+        public bool upDateMovie(MovieModel movie)
+        {
+            try
+            {
+                _db.Entry(movie).State = EntityState.Modified;
+                return true;
+            }
+            catch
+            {
+
+                return false;
+            }
+        }
     }
 }

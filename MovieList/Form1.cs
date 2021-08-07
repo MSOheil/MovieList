@@ -1,7 +1,6 @@
 ﻿using Movie.DataLayer;
 using Movie.DataLayer.Data;
 using Movie.DataLayer.Repositories;
-using MovieList.Utility.Convertor;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,6 +41,11 @@ namespace MovieList
         private void btnAddMovie_Click(object sender, EventArgs e)
         {
             frmAddOrEditMovie frm = new frmAddOrEditMovie();
+            if (dgvListMovie.CurrentRow != null)
+            {
+                var MoviId = Convert.ToInt32(dgvListMovie.CurrentRow.Cells[0].Value.ToString());
+                frm.MovieId = MoviId;
+            }
             frm.ShowDialog();
         }
 
@@ -116,7 +120,7 @@ namespace MovieList
 
                 if (checkboxProduction.Checked)
                 {
-                  dgvListMovie.DataSource=  db.MovieList.sortedByProductionDate();
+                    dgvListMovie.DataSource = db.MovieList.sortedByProductionDate();
                 }
                 if (checkBoxRat.Checked)
                 {

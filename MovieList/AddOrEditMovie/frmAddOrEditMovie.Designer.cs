@@ -30,6 +30,10 @@ namespace MovieList
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtProductionDateMovie = new System.Windows.Forms.MaskedTextBox();
+            this.btnInsertOrEdit = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtRatMovie = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtGenresName = new System.Windows.Forms.TextBox();
@@ -37,10 +41,6 @@ namespace MovieList
             this.txtDirectorName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtMovieName = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtRatMovie = new System.Windows.Forms.TextBox();
-            this.btnInsertOrEdit = new System.Windows.Forms.Button();
-            this.txtProductionDateMovie = new System.Windows.Forms.MaskedTextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,6 +62,42 @@ namespace MovieList
             this.groupBox1.Size = new System.Drawing.Size(555, 247);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // txtProductionDateMovie
+            // 
+            this.txtProductionDateMovie.Location = new System.Drawing.Point(6, 95);
+            this.txtProductionDateMovie.Mask = "0000/00/00";
+            this.txtProductionDateMovie.Name = "txtProductionDateMovie";
+            this.txtProductionDateMovie.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtProductionDateMovie.Size = new System.Drawing.Size(406, 20);
+            this.txtProductionDateMovie.TabIndex = 11;
+            this.txtProductionDateMovie.ValidatingType = typeof(System.DateTime);
+            // 
+            // btnInsertOrEdit
+            // 
+            this.btnInsertOrEdit.Location = new System.Drawing.Point(6, 147);
+            this.btnInsertOrEdit.Name = "btnInsertOrEdit";
+            this.btnInsertOrEdit.Size = new System.Drawing.Size(548, 23);
+            this.btnInsertOrEdit.TabIndex = 10;
+            this.btnInsertOrEdit.Text = "ثبت اطلاعات";
+            this.btnInsertOrEdit.UseVisualStyleBackColor = true;
+            this.btnInsertOrEdit.Click += new System.EventHandler(this.btnInsertOrEdit_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(420, 124);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(129, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "میانگین امتیاز گرفته شده :";
+            // 
+            // txtRatMovie
+            // 
+            this.txtRatMovie.Location = new System.Drawing.Point(6, 121);
+            this.txtRatMovie.Name = "txtRatMovie";
+            this.txtRatMovie.Size = new System.Drawing.Size(406, 20);
+            this.txtRatMovie.TabIndex = 8;
             // 
             // label4
             // 
@@ -120,42 +156,6 @@ namespace MovieList
             this.txtMovieName.Size = new System.Drawing.Size(406, 20);
             this.txtMovieName.TabIndex = 0;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(420, 124);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(129, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "میانگین امتیاز گرفته شده :";
-            // 
-            // txtRatMovie
-            // 
-            this.txtRatMovie.Location = new System.Drawing.Point(6, 121);
-            this.txtRatMovie.Name = "txtRatMovie";
-            this.txtRatMovie.Size = new System.Drawing.Size(406, 20);
-            this.txtRatMovie.TabIndex = 8;
-            // 
-            // btnInsertOrEdit
-            // 
-            this.btnInsertOrEdit.Location = new System.Drawing.Point(6, 147);
-            this.btnInsertOrEdit.Name = "btnInsertOrEdit";
-            this.btnInsertOrEdit.Size = new System.Drawing.Size(548, 23);
-            this.btnInsertOrEdit.TabIndex = 10;
-            this.btnInsertOrEdit.Text = "ثبت اطلاعات";
-            this.btnInsertOrEdit.UseVisualStyleBackColor = true;
-            this.btnInsertOrEdit.Click += new System.EventHandler(this.btnInsertOrEdit_Click);
-            // 
-            // txtProductionDateMovie
-            // 
-            this.txtProductionDateMovie.Location = new System.Drawing.Point(6, 95);
-            this.txtProductionDateMovie.Mask = "0000/00/00";
-            this.txtProductionDateMovie.Name = "txtProductionDateMovie";
-            this.txtProductionDateMovie.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtProductionDateMovie.Size = new System.Drawing.Size(406, 20);
-            this.txtProductionDateMovie.TabIndex = 11;
-            this.txtProductionDateMovie.ValidatingType = typeof(System.DateTime);
-            // 
             // frmAddOrEditMovie
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -164,7 +164,7 @@ namespace MovieList
             this.Controls.Add(this.groupBox1);
             this.Name = "frmAddOrEditMovie";
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.Text = "frmAddOrEditMovie";
+            this.Text = "افزودن فیلم";
             this.Load += new System.EventHandler(this.frmAddOrEditMovie_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

@@ -28,6 +28,7 @@ namespace Movie.DataLayer.Repositories
         string findNameById(int movieId);
         List<CommentView> getAllComment(int movieId);
         IEnumerable<MovieModel> getAllMovie();
+        bool upDateMovie(MovieModel movie);
 
     }
 }
