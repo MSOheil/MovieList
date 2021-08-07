@@ -14,21 +14,21 @@ namespace Movie.DataLayer.Repositories
         IEnumerable<MovieModel> getMovieByGenresName(string parametr);
         IEnumerable<MovieModel> getAllWithUpRat(int parametr);
         IEnumerable<MovieModel> getAllWithLowRat(int parametr);
-        List<MovieModel> getAllMoveWithStarttDate(DateTime parametr);
-        List<MovieModel> getAllMoveWithEndDate(DateTime parametr);
-        bool InsertMovie(MovieModel movieModel);
-        bool InsertComment(CommentModel comment);
-        bool DeleteMovie(MovieModel movieModel);
-        bool DeleteMovie(int movieId);
         IEnumerable<MovieModel> sortedByAverageRat();
         IEnumerable<MovieModel> sortedByProductionDate();
-        MovieModel findById(int movieId);
-        List<int> getRat();
-        CommentModel findByIdComment(int movieId);
-        string findNameById(int movieId);
-        List<CommentView> getAllComment(int movieId);
         IEnumerable<MovieModel> getAllMovie();
+        List<MovieModel> getAllMoveWithStarttDate(DateTime parametr);
+        List<MovieModel> getAllMoveWithEndDate(DateTime parametr);
+        List<int> getRat();
+        List<CommentView> getAllComment(int movieId);
+        bool insertMovie(MovieModel movieModel);
+        bool insertComment(CommentModel comment);
+        bool deleteMovie(MovieModel movieModel);
+        bool deleteMovie(int movieId);
         bool upDateMovie(MovieModel movie);
+        string findNameById(int movieId);
+        MovieModel findById(int movieId);
+        CommentModel findByIdComment(int movieId);
 
     }
 }

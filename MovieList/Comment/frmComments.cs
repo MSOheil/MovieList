@@ -21,11 +21,7 @@ namespace MovieList
 
         private void frmComments_Load(object sender, EventArgs e)
         {
-            using (UnitOfWork db=new UnitOfWork())
-            {
-                dgvComment.AutoGenerateColumns = false;
-                dgvComment.DataSource = db.MovieList.getAllComment(MovieId);
-            }
+            bindGrid();
         }
 
         private void btnAddComment_Click(object sender, EventArgs e)
@@ -33,6 +29,18 @@ namespace MovieList
             frmAddComment frm = new frmAddComment();
             frm.IdMovie = MovieId;
             frm.ShowDialog();
+            if (frm.DialogResult == DialogResult.OK)
+            {
+                bindGrid();
+            }
+        }
+        private void bindGrid()
+        {
+            using (UnitOfWork db = new UnitOfWork())
+            {
+                dgvComment.AutoGenerateColumns = false;
+                dgvComment.DataSource = db.MovieList.getAllComment(MovieId);
+            }
         }
     }
 }

@@ -56,6 +56,7 @@ namespace MovieList
             this.DateProduction = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AverageRat = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Generes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListMovie)).BeginInit();
@@ -63,6 +64,7 @@ namespace MovieList
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnDelete);
             this.groupBox1.Controls.Add(this.sortByCheckBox);
             this.groupBox1.Controls.Add(this.checkboxProduction);
             this.groupBox1.Controls.Add(this.checkBoxRat);
@@ -324,6 +326,16 @@ namespace MovieList
             this.Generes.Name = "Generes";
             this.Generes.ReadOnly = true;
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(6, 24);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(93, 23);
+            this.btnDelete.TabIndex = 17;
+            this.btnDelete.Text = "حذف فیلم";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -372,6 +384,7 @@ namespace MovieList
         private System.Windows.Forms.Button sortByCheckBox;
         private System.Windows.Forms.CheckBox checkboxProduction;
         private System.Windows.Forms.CheckBox checkBoxRat;
+        private System.Windows.Forms.Button btnDelete;
     }
 }
 

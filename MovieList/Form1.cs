@@ -22,12 +22,7 @@ namespace MovieList
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            using (UnitOfWork db = new UnitOfWork())
-            {
-                dgvListMovie.AutoGenerateColumns = false;
-                dgvListMovie.DataSource = db.MovieList.getAllMovie();
-
-            }
+            bindGrid();
         }
 
         private void dgvListMovie_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -47,6 +42,10 @@ namespace MovieList
                 frm.MovieId = MoviId;
             }
             frm.ShowDialog();
+            if (frm.DialogResult == DialogResult.OK)
+            {
+                bindGrid();
+            }
         }
 
         private void btnFilter_Click(object sender, EventArgs e)
@@ -127,6 +126,26 @@ namespace MovieList
                     dgvListMovie.DataSource = db.MovieList.sortedByAverageRat();
 
                 }
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            var MoviId = Convert.ToInt32(dgvListMovie.CurrentRow.Cells[0].Value.ToString());
+            using (UnitOfWork db = new UnitOfWork())
+            {
+                db.MovieList.deleteMovie(MoviId);
+                db.Save();
+
+            }
+            bindGrid();
+        }
+        public void bindGrid()
+        {
+            using (UnitOfWork db = new UnitOfWork())
+            {
+                dgvListMovie.AutoGenerateColumns = false;
+                dgvListMovie.DataSource = db.MovieList.getAllMovie();
             }
         }
     }

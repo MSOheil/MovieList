@@ -18,11 +18,11 @@ namespace Movie.DataLayer.Servicess
             _db = context;
         }
 
-        public bool DeleteMovie(MovieModel movieModel)
+        public bool deleteMovie(MovieModel movieModel)
         {
             try
             {
-                _db.MovieModels.Remove(movieModel);
+                _db.Entry(movieModel).State = EntityState.Deleted;
                 return true;
             }
             catch
@@ -31,18 +31,18 @@ namespace Movie.DataLayer.Servicess
             }
         }
 
-        public bool DeleteMovie(int movieId)
+        public bool deleteMovie(int movieId)
         {
             try
             {
+                
                 var movie = findById(movieId);
-                DeleteMovie(movie);
+                deleteMovie(movie);
                 return true;
             }
             catch
             {
-
-                throw;
+                return false;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Movie.DataLayer.Servicess
             return _db.MovieModels.Select(sa => sa.AverageRat).ToList();
         }
 
-        public bool InsertComment(CommentModel comment)
+        public bool insertComment(CommentModel comment)
         {
             try
             {
@@ -121,12 +121,11 @@ namespace Movie.DataLayer.Servicess
             }
             catch
             {
-
                 return false;
             }
         }
 
-        public bool InsertMovie(MovieModel movieModel)
+        public bool insertMovie(MovieModel movieModel)
         {
             try
             {
@@ -135,7 +134,6 @@ namespace Movie.DataLayer.Servicess
             }
             catch
             {
-
                 return false;
             }
         }
@@ -159,7 +157,6 @@ namespace Movie.DataLayer.Servicess
             }
             catch
             {
-
                 return false;
             }
         }

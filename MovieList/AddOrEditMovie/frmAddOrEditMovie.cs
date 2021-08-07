@@ -58,12 +58,13 @@ namespace MovieList
                     };
                     using (UnitOfWork db = new UnitOfWork())
                     {
-                        db.MovieList.InsertMovie(movie);
+                        db.MovieList.insertMovie(movie);
                         db.Save();
                     }
                     DialogResult = DialogResult.OK;
                 }
             }
+            
 
 
         }
@@ -108,5 +109,6 @@ namespace MovieList
                 }
             }
         }
+        
     }
 }
