@@ -1,4 +1,5 @@
 ﻿using Movie.DataLayer.Data;
+using Movie.ViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ namespace MovieList
     public partial class frmComments : Form
     {
         public int MovieId = 0;
+
         public frmComments()
         {
             InitializeComponent();
@@ -33,6 +35,7 @@ namespace MovieList
             {
                 bindGrid();
             }
+            DialogResult = DialogResult.OK;
         }
         private void bindGrid()
         {
@@ -40,6 +43,14 @@ namespace MovieList
             {
                 dgvComment.AutoGenerateColumns = false;
                 dgvComment.DataSource = db.MovieList.GetAllComment(MovieId);
+                var comm = db.MovieList.GetAllComment(MovieId);
+                if (comm.Count() != 0)
+                {
+                    var ave = db.MovieList.GetAverageRateMovie(MovieId);
+                    txtMovieRate.Text = Convert.ToString(Math.Round(ave, 2));
+                    RateMovieViewModel rate = new RateMovieViewModel();
+                    rate.MovieAverageRateByRateUsers = Convert.ToDouble(Math.Round(ave, 2));
+                }
             }
         }
     }

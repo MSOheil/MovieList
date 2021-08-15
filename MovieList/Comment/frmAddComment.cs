@@ -14,7 +14,7 @@ namespace MovieList
 {
     public partial class frmAddComment : Form
     {
-        public int IdMovie=0;
+        public int IdMovie = 0;
         public frmAddComment()
         {
             InitializeComponent();
@@ -26,12 +26,12 @@ namespace MovieList
             {
                 CommentModel comment = new CommentModel()
                 {
-                    CommentRat = txtUserRat.Text,
+                    CommentRat = Convert.ToDouble(txtUserRat.Text),
                     CommentName = txtUserName.Text,
                     CommentDescription = txtComment.Text,
                     MovieId = IdMovie
                 };
-                using (UnitOfWork db=new UnitOfWork())
+                using (UnitOfWork db = new UnitOfWork())
                 {
                     db.MovieList.InsertComment(comment);
                     db.Save();

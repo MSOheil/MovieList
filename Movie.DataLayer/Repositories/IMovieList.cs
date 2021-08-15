@@ -7,28 +7,61 @@ using System.Threading.Tasks;
 
 namespace Movie.DataLayer.Repositories
 {
-   public interface IMovieList
+    public interface IMovieList
     {
 
-        IEnumerable<MovieModel> GetMovieByName(string parametr);
-        IEnumerable<MovieModel> GetMovieByGenresName(string parametr);
-        IEnumerable<MovieModel> GetAllWithUpRat(int parametr);
-        IEnumerable<MovieModel> GetAllWithLowRat(int parametr);
-        IEnumerable<MovieModel> SortedByAverageRat();
-        IEnumerable<MovieModel> SortedByProductionDate();
-        IEnumerable<MovieModel> GetAllMovie();
-        List<MovieModel> GetAllMoveWithStarttDate(DateTime parametr);
-        List<MovieModel> GetAllMoveWithEndDate(DateTime parametr);
-        List<double> GetRat();
-        List<CommentView> GetAllComment(int movieId);
+        List<RateMovieViewModel> SortedByProductionDateAscending();
+        List<RateMovieViewModel> SortedByProductionDateDecending();
+        List<RateMovieViewModel> SortedByAverageRateAscending();
+        List<RateMovieViewModel> SortedByAverageRateDescending();
+
+
+
+
+        IEnumerable<int> GetAllGenresByMovieId(int movieId);
+        IEnumerable<RateMovieViewModel> GetAllMovie();
+        List<RateMovieViewModel> GetAllMovieByIdGenres(int genresId);
+        IEnumerable<CommentModel> GetCommentWithMoviId(int movieId);
+        IEnumerable<GetNameGenresViewModel> GetNameGenres();
+        IEnumerable<MovieModel> GetAllWithDirectorName(int movieId);
+        IEnumerable<RateMovieViewModel> GetMovieByName(string movieName);
+        List<RateMovieViewModel> GetAllMoveWithStarttDate(int dateTime);
+        List<RateMovieViewModel> GetAllMoveWithEndDate(int dateTime);
+        double GetAverageRateMovie(int movieId);
+        IEnumerable<CommentViewModel> GetAllComment(int movieId);
+        IEnumerable<Genre> GetMovieByGenresName(string genresName);
+        List<RateMovieViewModel> GetMovieByDirectorName(string directorName);
+        List<RateMovieViewModel> GetAllMovieByFilterRate(double rateInput);
+
+
+
+
+
+
         bool InsertMovie(MovieModel movieModel);
         bool InsertComment(CommentModel comment);
+        bool InsertGenres(GenresToMovie genresId);
+
+
+
+
+
         bool DeleteMovie(MovieModel movieModel);
         bool DeleteMovie(int movieId);
-        bool UpDateMovie(MovieModel movie);
+
+
+
+
+
         string FindNameById(int movieId);
         MovieModel FindById(int movieId);
         CommentModel FindByIdComment(int movieId);
+        List<string> FindNameGenresByIdGenres(int genresId);
+
+
+
+
+        bool UpDateMovie(MovieModel movie);
 
     }
 }

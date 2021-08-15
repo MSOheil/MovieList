@@ -11,9 +11,24 @@
           </Key>
           <Property Name="CommentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CommentName" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="CommentRat" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="CommentRat" Type="float" Nullable="false" />
           <Property Name="MovieId" Type="int" Nullable="false" />
           <Property Name="CommentDescription" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="GenresId" />
+          </Key>
+          <Property Name="GenresId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GenresName" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GenresToMovie">
+          <Key>
+            <PropertyRef Name="GenresToMovieId" />
+          </Key>
+          <Property Name="GenresToMovieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GenresId" Type="int" Nullable="false" />
+          <Property Name="MovieId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="MovieModel">
           <Key>
@@ -22,9 +37,7 @@
           <Property Name="MovieID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MovieName" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="DirectorName" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="DateProduction" Type="datetime" Nullable="false" />
-          <Property Name="AverageRat" Type="float" Nullable="false" />
-          <Property Name="Generes" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="DateProduction" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_CommentModel_MovieModel">
           <End Role="MovieModel" Type="Self.MovieModel" Multiplicity="1">
@@ -40,28 +53,48 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CommentModel_MovieModel1">
+        <Association Name="FK_GenresToMovie_Genres">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="GenresToMovie" Type="Self.GenresToMovie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="GenresId" />
+            </Principal>
+            <Dependent Role="GenresToMovie">
+              <PropertyRef Name="GenresId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GenresToMovie_MovieModel">
           <End Role="MovieModel" Type="Self.MovieModel" Multiplicity="1" />
-          <End Role="CommentModel" Type="Self.CommentModel" Multiplicity="*" />
+          <End Role="GenresToMovie" Type="Self.GenresToMovie" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MovieModel">
               <PropertyRef Name="MovieID" />
             </Principal>
-            <Dependent Role="CommentModel">
+            <Dependent Role="GenresToMovie">
               <PropertyRef Name="MovieId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MovieContext_DBModelStoreContainer">
           <EntitySet Name="CommentModel" EntityType="Self.CommentModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GenresToMovie" EntityType="Self.GenresToMovie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MovieModel" EntityType="Self.MovieModel" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CommentModel_MovieModel" Association="Self.FK_CommentModel_MovieModel">
             <End Role="MovieModel" EntitySet="MovieModel" />
             <End Role="CommentModel" EntitySet="CommentModel" />
           </AssociationSet>
-          <AssociationSet Name="FK_CommentModel_MovieModel1" Association="Self.FK_CommentModel_MovieModel1">
+          <AssociationSet Name="FK_GenresToMovie_Genres" Association="Self.FK_GenresToMovie_Genres">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="GenresToMovie" EntitySet="GenresToMovie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GenresToMovie_MovieModel" Association="Self.FK_GenresToMovie_MovieModel">
             <End Role="MovieModel" EntitySet="MovieModel" />
-            <End Role="CommentModel" EntitySet="CommentModel" />
+            <End Role="GenresToMovie" EntitySet="GenresToMovie" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -75,11 +108,28 @@
           </Key>
           <Property Name="CommentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CommentName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CommentRat" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CommentRat" Type="Double" Nullable="false" />
           <Property Name="MovieId" Type="Int32" Nullable="false" />
           <Property Name="CommentDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="MovieModel" Relationship="Self.FK_CommentModel_MovieModel" FromRole="CommentModel" ToRole="MovieModel" />
-          <NavigationProperty Name="MovieModel1" Relationship="Self.FK_CommentModel_MovieModel1" FromRole="CommentModel" ToRole="MovieModel" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="GenresId" />
+          </Key>
+          <Property Name="GenresId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GenresName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="GenresToMovies" Relationship="Self.FK_GenresToMovie_Genres" FromRole="Genres" ToRole="GenresToMovie" />
+        </EntityType>
+        <EntityType Name="GenresToMovie">
+          <Key>
+            <PropertyRef Name="GenresToMovieId" />
+          </Key>
+          <Property Name="GenresToMovieId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GenresId" Type="Int32" Nullable="false" />
+          <Property Name="MovieId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Genre" Relationship="Self.FK_GenresToMovie_Genres" FromRole="GenresToMovie" ToRole="Genres" />
+          <NavigationProperty Name="MovieModel" Relationship="Self.FK_GenresToMovie_MovieModel" FromRole="GenresToMovie" ToRole="MovieModel" />
         </EntityType>
         <EntityType Name="MovieModel">
           <Key>
@@ -88,11 +138,9 @@
           <Property Name="MovieID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MovieName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DirectorName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DateProduction" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="AverageRat" Type="Double" Nullable="false" />
-          <Property Name="Generes" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateProduction" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CommentModels" Relationship="Self.FK_CommentModel_MovieModel" FromRole="MovieModel" ToRole="CommentModel" />
-          <NavigationProperty Name="CommentModels1" Relationship="Self.FK_CommentModel_MovieModel1" FromRole="MovieModel" ToRole="CommentModel" />
+          <NavigationProperty Name="GenresToMovies" Relationship="Self.FK_GenresToMovie_MovieModel" FromRole="MovieModel" ToRole="GenresToMovie" />
         </EntityType>
         <Association Name="FK_CommentModel_MovieModel">
           <End Role="MovieModel" Type="Self.MovieModel" Multiplicity="1">
@@ -108,28 +156,48 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CommentModel_MovieModel1">
+        <Association Name="FK_GenresToMovie_Genres">
+          <End Role="Genres" Type="Self.Genre" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="GenresToMovie" Type="Self.GenresToMovie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="GenresId" />
+            </Principal>
+            <Dependent Role="GenresToMovie">
+              <PropertyRef Name="GenresId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GenresToMovie_MovieModel">
           <End Role="MovieModel" Type="Self.MovieModel" Multiplicity="1" />
-          <End Role="CommentModel" Type="Self.CommentModel" Multiplicity="*" />
+          <End Role="GenresToMovie" Type="Self.GenresToMovie" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MovieModel">
               <PropertyRef Name="MovieID" />
             </Principal>
-            <Dependent Role="CommentModel">
+            <Dependent Role="GenresToMovie">
               <PropertyRef Name="MovieId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="MovieContext_DBEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="MovieContext_DBEntities8" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CommentModels" EntityType="Self.CommentModel" />
+          <EntitySet Name="Genres" EntityType="Self.Genre" />
+          <EntitySet Name="GenresToMovies" EntityType="Self.GenresToMovie" />
           <EntitySet Name="MovieModels" EntityType="Self.MovieModel" />
           <AssociationSet Name="FK_CommentModel_MovieModel" Association="Self.FK_CommentModel_MovieModel">
             <End Role="MovieModel" EntitySet="MovieModels" />
             <End Role="CommentModel" EntitySet="CommentModels" />
           </AssociationSet>
-          <AssociationSet Name="FK_CommentModel_MovieModel1" Association="Self.FK_CommentModel_MovieModel1">
+          <AssociationSet Name="FK_GenresToMovie_Genres" Association="Self.FK_GenresToMovie_Genres">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="GenresToMovie" EntitySet="GenresToMovies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GenresToMovie_MovieModel" Association="Self.FK_GenresToMovie_MovieModel">
             <End Role="MovieModel" EntitySet="MovieModels" />
-            <End Role="CommentModel" EntitySet="CommentModels" />
+            <End Role="GenresToMovie" EntitySet="GenresToMovies" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -137,7 +205,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MovieContext_DBModelStoreContainer" CdmEntityContainer="MovieContext_DBEntities1">
+        <EntityContainerMapping StorageEntityContainer="MovieContext_DBModelStoreContainer" CdmEntityContainer="MovieContext_DBEntities8">
           <EntitySetMapping Name="CommentModels">
             <EntityTypeMapping TypeName="MovieContext_DBModel.CommentModel">
               <MappingFragment StoreEntitySet="CommentModel">
@@ -149,6 +217,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="MovieContext_DBModel.Genre">
+              <MappingFragment StoreEntitySet="Genres">
+                <ScalarProperty Name="GenresId" ColumnName="GenresId" />
+                <ScalarProperty Name="GenresName" ColumnName="GenresName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GenresToMovies">
+            <EntityTypeMapping TypeName="MovieContext_DBModel.GenresToMovie">
+              <MappingFragment StoreEntitySet="GenresToMovie">
+                <ScalarProperty Name="GenresToMovieId" ColumnName="GenresToMovieId" />
+                <ScalarProperty Name="GenresId" ColumnName="GenresId" />
+                <ScalarProperty Name="MovieId" ColumnName="MovieId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="MovieModels">
             <EntityTypeMapping TypeName="MovieContext_DBModel.MovieModel">
               <MappingFragment StoreEntitySet="MovieModel">
@@ -156,8 +241,6 @@
                 <ScalarProperty Name="MovieName" ColumnName="MovieName" />
                 <ScalarProperty Name="DirectorName" ColumnName="DirectorName" />
                 <ScalarProperty Name="DateProduction" ColumnName="DateProduction" />
-                <ScalarProperty Name="AverageRat" ColumnName="AverageRat" />
-                <ScalarProperty Name="Generes" ColumnName="Generes" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

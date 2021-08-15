@@ -13,10 +13,10 @@ namespace Movie.DataLayer
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MovieContext_DBEntities1 : DbContext
+    public partial class MovieContext_DBEntities8 : DbContext
     {
-        public MovieContext_DBEntities1()
-            : base("name=MovieContext_DBEntities1")
+        public MovieContext_DBEntities8()
+            : base("name=MovieContext_DBEntities8")
         {
         }
     
@@ -26,6 +26,8 @@ namespace Movie.DataLayer
         }
     
         public virtual DbSet<CommentModel> CommentModels { get; set; }
+        public virtual DbSet<Genre> Genres { get; set; }
+        public virtual DbSet<GenresToMovie> GenresToMovies { get; set; }
         public virtual DbSet<MovieModel> MovieModels { get; set; }
     }
 }

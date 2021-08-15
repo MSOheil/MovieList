@@ -12,7 +12,7 @@ namespace Movie.DataLayer.Data
     public class UnitOfWork : IDisposable
     {
 
-        MovieContext_DBEntities1 db = new MovieContext_DBEntities1();
+        MovieContext_DBEntities8 db = new MovieContext_DBEntities8();
         private IMovieList _movieList;
         public IMovieList MovieList
         {
@@ -23,11 +23,8 @@ namespace Movie.DataLayer.Data
                     _movieList = new MovieList(db);
                 }
                 return _movieList;
-
             }
         }
-
-
         public void Save()
         {
             db.SaveChanges();

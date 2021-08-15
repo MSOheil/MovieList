@@ -12,14 +12,13 @@ namespace Movie.DataLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class CommentModel
+    public partial class GenresToMovie
     {
-        public int CommentID { get; set; }
-        public string CommentName { get; set; }
-        public double CommentRat { get; set; }
+        public int GenresToMovieId { get; set; }
+        public int GenresId { get; set; }
         public int MovieId { get; set; }
-        public string CommentDescription { get; set; }
     
+        public virtual Genre Genre { get; set; }
         public virtual MovieModel MovieModel { get; set; }
     }
 }

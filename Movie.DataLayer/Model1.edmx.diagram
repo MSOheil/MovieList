@@ -4,11 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ae568c35b9864af8b4fc0748929fd694" Name="Diagram1">
-        <EntityTypeShape EntityType="MovieContext_DBModel.CommentModel" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="MovieContext_DBModel.MovieModel" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+      <Diagram DiagramId="b6b9c13f6d324c648ea2974d87cfccc4" Name="Diagram1">
+        <EntityTypeShape EntityType="MovieContext_DBModel.CommentModel" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MovieContext_DBModel.Genre" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MovieContext_DBModel.GenresToMovie" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MovieContext_DBModel.MovieModel" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
         <AssociationConnector Association="MovieContext_DBModel.FK_CommentModel_MovieModel" ManuallyRouted="false" />
-        <AssociationConnector Association="MovieContext_DBModel.FK_CommentModel_MovieModel1" ManuallyRouted="false" />
+        <AssociationConnector Association="MovieContext_DBModel.FK_GenresToMovie_Genres" ManuallyRouted="false" />
+        <AssociationConnector Association="MovieContext_DBModel.FK_GenresToMovie_MovieModel" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

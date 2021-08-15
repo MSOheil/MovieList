@@ -30,19 +30,23 @@ namespace MovieList
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dgvComment = new System.Windows.Forms.DataGridView();
             this.btnAddComment = new System.Windows.Forms.Button();
             this.lblNameComment = new System.Windows.Forms.Label();
-            this.dgvComment = new System.Windows.Forms.DataGridView();
+            this.txtMovieRate = new System.Windows.Forms.TextBox();
             this.UserCommentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UserRatComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CommentUserDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IdUserComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvComment)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.txtMovieRate);
             this.groupBox1.Controls.Add(this.dgvComment);
             this.groupBox1.Controls.Add(this.btnAddComment);
             this.groupBox1.Controls.Add(this.lblNameComment);
@@ -52,6 +56,23 @@ namespace MovieList
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "کامنت ها";
+            // 
+            // dgvComment
+            // 
+            this.dgvComment.AllowUserToAddRows = false;
+            this.dgvComment.AllowUserToDeleteRows = false;
+            this.dgvComment.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvComment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvComment.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.UserCommentName,
+            this.UserRatComment,
+            this.CommentUserDescription,
+            this.IdUserComment});
+            this.dgvComment.Location = new System.Drawing.Point(7, 40);
+            this.dgvComment.Name = "dgvComment";
+            this.dgvComment.ReadOnly = true;
+            this.dgvComment.Size = new System.Drawing.Size(893, 193);
+            this.dgvComment.TabIndex = 3;
             // 
             // btnAddComment
             // 
@@ -71,22 +92,13 @@ namespace MovieList
             this.lblNameComment.Size = new System.Drawing.Size(0, 16);
             this.lblNameComment.TabIndex = 1;
             // 
-            // dgvComment
+            // txtMovieRate
             // 
-            this.dgvComment.AllowUserToAddRows = false;
-            this.dgvComment.AllowUserToDeleteRows = false;
-            this.dgvComment.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvComment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvComment.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.UserCommentName,
-            this.UserRatComment,
-            this.CommentUserDescription,
-            this.IdUserComment});
-            this.dgvComment.Location = new System.Drawing.Point(7, 40);
-            this.dgvComment.Name = "dgvComment";
-            this.dgvComment.ReadOnly = true;
-            this.dgvComment.Size = new System.Drawing.Size(893, 193);
-            this.dgvComment.TabIndex = 3;
+            this.txtMovieRate.Location = new System.Drawing.Point(582, 12);
+            this.txtMovieRate.Name = "txtMovieRate";
+            this.txtMovieRate.ReadOnly = true;
+            this.txtMovieRate.Size = new System.Drawing.Size(100, 23);
+            this.txtMovieRate.TabIndex = 4;
             // 
             // UserCommentName
             // 
@@ -117,6 +129,15 @@ namespace MovieList
             this.IdUserComment.ReadOnly = true;
             this.IdUserComment.Visible = false;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(688, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(206, 16);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "میانگین امتیاز گرفته شده از کاربران :";
+            // 
             // frmComments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -143,9 +164,11 @@ namespace MovieList
         private System.Windows.Forms.Label lblNameComment;
         private System.Windows.Forms.Button btnAddComment;
         private System.Windows.Forms.DataGridView dgvComment;
+        private System.Windows.Forms.TextBox txtMovieRate;
         private System.Windows.Forms.DataGridViewTextBoxColumn UserCommentName;
         private System.Windows.Forms.DataGridViewTextBoxColumn UserRatComment;
         private System.Windows.Forms.DataGridViewTextBoxColumn CommentUserDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn IdUserComment;
+        private System.Windows.Forms.Label label1;
     }
 }

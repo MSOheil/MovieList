@@ -1,5 +1,6 @@
 ﻿using Movie.DataLayer;
 using Movie.DataLayer.Data;
+using Movie.ViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,26 +20,29 @@ namespace MovieList
         {
             InitializeComponent();
         }
-
         private void btnInsertOrEdit_Click(object sender, EventArgs e)
         {
 
             if (MovieId > 0)
             {
 
-                MovieModel EditMovie = new MovieModel()
-                {
-                    MovieName = txtMovieName.Text,
-                    DirectorName = txtDirectorName.Text,
-                    Generes = txtGenresName.Text,
-                    DateProduction = Convert.ToDateTime(txtProductionDateMovie.Text),
-                    AverageRat = int.Parse(txtRatMovie.Text),
-                    MovieID = MovieId
-                };
                 using (UnitOfWork db = new UnitOfWork())
                 {
+                    MovieModel EditMovie = new MovieModel()
+                    {
+                        MovieName = txtMovieName.Text,
+                        DirectorName = txtDirectorName.Text,
+                        DateProduction = Convert.ToInt32(txtProductionDateMovie.Text),
+                        MovieID = MovieId,
+                    };
+                    GenresToMovie genre = new GenresToMovie()
+                    {
+                        GenresId = (int)checkedListGenresBySelectMovie.SelectedValue,
+                        MovieId = MovieId
+                    };
 
                     db.MovieList.UpDateMovie(EditMovie);
+                    db.MovieList.InsertGenres(genre);
                     db.Save();
                 }
                 DialogResult = DialogResult.OK;
@@ -48,25 +52,31 @@ namespace MovieList
 
                 if (IsValid())
                 {
-                    MovieModel movie = new MovieModel()
-                    {
-                        MovieName = txtMovieName.Text,
-                        DirectorName = txtDirectorName.Text,
-                        Generes = txtGenresName.Text,
-                        DateProduction = Convert.ToDateTime(txtProductionDateMovie.Text),
-                        AverageRat = Convert.ToDouble(txtRatMovie.Text)
-                    };
                     using (UnitOfWork db = new UnitOfWork())
                     {
+                        var year = txtProductionDateMovie.Text;
+
+
+                        MovieModel movie = new MovieModel()
+                        {
+                            MovieName = txtMovieName.Text,
+                            DirectorName = txtDirectorName.Text,
+                            DateProduction = Convert.ToInt32(txtProductionDateMovie.Text)
+                        };
+                        foreach (var ListBoxItem in checkedListGenresBySelectMovie.CheckedIndices)
+                        {
+                            GenresToMovie genre = new GenresToMovie()
+                            {
+                                GenresId = (int)ListBoxItem
+                            };
+                            db.MovieList.InsertGenres(genre);
+                        }
                         db.MovieList.InsertMovie(movie);
                         db.Save();
                     }
                     DialogResult = DialogResult.OK;
                 }
             }
-
-
-
         }
         private bool IsValid()
         {
@@ -75,19 +85,15 @@ namespace MovieList
                 MessageBox.Show("لطفا نام فیلم را وارد کنید");
                 return false;
             }
-            if (txtGenresName.Text == "")
-            {
-                MessageBox.Show("لطفا نام ژانر فیلم  را وارد کنید");
-                return false;
-            }
+
             if (txtDirectorName.Text == "")
             {
                 MessageBox.Show("لطفا نام کارگردان فیلم را وارد کنید");
                 return false;
             }
-            if (txtRatMovie.Text == "")
+            if (checkedListGenresBySelectMovie.Text == "")
             {
-                MessageBox.Show("لطفا نام میانگین فیلم  را وارد کنید");
+                MessageBox.Show("لطفا ژانر یا ژانر های  فیلم را وارد کنید");
                 return false;
             }
             return true;
@@ -95,20 +101,40 @@ namespace MovieList
 
         private void frmAddOrEditMovie_Load(object sender, EventArgs e)
         {
+            using (UnitOfWork db = new UnitOfWork())
+            {
+                List<GetNameGenresViewModel> list = new List<GetNameGenresViewModel>();
+                list.Add(new GetNameGenresViewModel()
+                {
+                    GenresId = 0,
+                    GenresName = "انتخاب کنید"
+                });
+                list.AddRange(db.MovieList.GetNameGenres());
+                checkedListGenresBySelectMovie.DataSource = list;
+                checkedListGenresBySelectMovie.DisplayMember = "GenresName";
+                checkedListGenresBySelectMovie.ValueMember = "GenresId";
+
+            }
             if (MovieId != 0)
             {
                 this.Text = "ویرایش فیلم";
                 using (UnitOfWork db = new UnitOfWork())
                 {
+                    var idexGenres = db.MovieList.GetAllGenresByMovieId(MovieId);
+                    foreach (var item in idexGenres)
+                    {
+                        checkedListGenresBySelectMovie.SetItemChecked(item,true);
+                    }
                     var movie = db.MovieList.FindById(MovieId);
                     txtDirectorName.Text = movie.DirectorName;
-                    txtGenresName.Text = movie.Generes;
                     txtMovieName.Text = movie.MovieName;
-                    txtProductionDateMovie.Text = movie.DateProduction.ToString("yyyy/dd/MM");
-                    txtRatMovie.Text = Convert.ToString(movie.AverageRat);
+                    txtProductionDateMovie.Text = movie.DateProduction.ToString();
                 }
             }
+          
+
         }
+
 
     }
 }

@@ -12,22 +12,17 @@ namespace Movie.DataLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class MovieModel
+    public partial class Genre
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MovieModel()
+        public Genre()
         {
-            this.CommentModels = new HashSet<CommentModel>();
             this.GenresToMovies = new HashSet<GenresToMovie>();
         }
     
-        public int MovieID { get; set; }
-        public string MovieName { get; set; }
-        public string DirectorName { get; set; }
-        public int DateProduction { get; set; }
+        public int GenresId { get; set; }
+        public string GenresName { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CommentModel> CommentModels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GenresToMovie> GenresToMovies { get; set; }
     }
