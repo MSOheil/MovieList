@@ -22,7 +22,7 @@ namespace MovieList
 
         private void addCommentByUser_Click(object sender, EventArgs e)
         {
-            if (isValidComment())
+            if (IsValidComment())
             {
                 CommentModel comment = new CommentModel()
                 {
@@ -40,7 +40,7 @@ namespace MovieList
 
             }
         }
-        private bool isValidComment()
+        private bool IsValidComment()
         {
             if (txtComment.Text == "")
             {

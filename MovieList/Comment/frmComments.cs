@@ -23,7 +23,7 @@ namespace MovieList
 
         private void frmComments_Load(object sender, EventArgs e)
         {
-            bindGrid();
+            BindGrid();
         }
 
         private void btnAddComment_Click(object sender, EventArgs e)
@@ -33,11 +33,11 @@ namespace MovieList
             frm.ShowDialog();
             if (frm.DialogResult == DialogResult.OK)
             {
-                bindGrid();
+                BindGrid();
             }
             DialogResult = DialogResult.OK;
         }
-        private void bindGrid()
+        private void BindGrid()
         {
             using (UnitOfWork db = new UnitOfWork())
             {
