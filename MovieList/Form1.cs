@@ -276,6 +276,10 @@ namespace MovieList
             {
                 pageNumber -= 1;
             }
+            if (sizePage > 5)
+            {
+                sizePage =5;
+            }
             using (UnitOfWork db = new UnitOfWork())
             {
                 dgvListMovie.AutoGenerateColumns = false;
