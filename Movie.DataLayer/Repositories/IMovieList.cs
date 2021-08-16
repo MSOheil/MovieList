@@ -23,15 +23,11 @@ namespace Movie.DataLayer.Repositories
         List<RateMovieViewModel> GetAllMovieByIdGenres(int genresId);
         IEnumerable<CommentModel> GetCommentWithMoviId(int movieId);
         IEnumerable<GetNameGenresViewModel> GetNameGenres();
-        IEnumerable<MovieModel> GetAllWithDirectorName(int movieId);
         IEnumerable<RateMovieViewModel> GetMovieByName(string movieName);
-        List<RateMovieViewModel> GetAllMoveWithStarttDate(int dateTime);
-        List<RateMovieViewModel> GetAllMoveWithEndDate(int dateTime);
         double GetAverageRateMovie(int movieId);
         IEnumerable<CommentViewModel> GetAllComment(int movieId);
         IEnumerable<Genre> GetMovieByGenresName(string genresName);
         List<RateMovieViewModel> GetMovieByDirectorName(string directorName);
-        List<RateMovieViewModel> GetAllMovieByFilterRate(double rateInput);
 
 
 
