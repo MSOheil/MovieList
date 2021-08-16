@@ -263,6 +263,7 @@ namespace MovieList
             }
             BindGrid();
         }
+
         public void BindGrid()
         {
 

@@ -35,7 +35,6 @@ namespace MovieList
             {
                 BindGrid();
             }
-            DialogResult = DialogResult.OK;
         }
         private void BindGrid()
         {
