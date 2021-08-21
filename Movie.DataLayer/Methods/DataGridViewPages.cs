@@ -16,7 +16,7 @@ namespace Movie.DataLayer.Methods
             using (UnitOfWork db = new UnitOfWork())
             {
                 var movies = db.MovieList.GetAllMovie();
-                double pageForResults = (double)db.MovieList.GetAllMovie().Count() / 5;
+                double pageForResults = (double)db.MovieList.GetAllMovie() / 5;
                 var numberpages = Convert.ToInt32(Math.Ceiling(pageForResults));
                 var numpage = Enumerable.Range(1, numberpages);
                 foreach (var item in numpage)
@@ -33,7 +33,7 @@ namespace Movie.DataLayer.Methods
 
             using (UnitOfWork db = new UnitOfWork())
             {
-                var countMovie = db.MovieList.GetAllMovie().Count();
+                var countMovie = db.MovieList.GetAllMovie();
                 var resPage = Enumerable.Range(1, countMovie);
                 foreach (var item in resPage)
                 {
@@ -42,13 +42,38 @@ namespace Movie.DataLayer.Methods
             }
             return pagesResult;
         }
-        public static List<RateMovieViewModel> ShowResultInPages(int pageNumber = 0, int ResultPerPage = 5)
+        public static int PageNumberController(int pageNumber)
         {
-            using (UnitOfWork db = new UnitOfWork())
+            if (pageNumber == 0)
             {
-                var result = db.MovieList.GetAllMovie().Skip(ResultPerPage * (pageNumber - 1)).Take(ResultPerPage);
-                return result.ToList();
+                pageNumber += 2;
             }
+           
+            if (pageNumber == 1)
+            {
+                pageNumber += 1;
+            }
+            return pageNumber;
         }
+        public static int ResultController(int sizePage)
+        {
+            if (sizePage == 0)
+            {
+                sizePage += 5;
+            }
+            if (sizePage > 5)
+            {
+                sizePage = 5;
+            }
+            return sizePage;
+        }
+        //public static List<RateMovieViewModel> ShowResultInPages(int pageNumber = 0, int ResultPerPage = 5)
+        //{
+        //    using (UnitOfWork db = new UnitOfWork())
+        //    {
+        //        var result = db.MovieList.GetAllMovie().Skip(ResultPerPage * (pageNumber - 1)).Take(ResultPerPage);
+        //        return result.ToList();
+        //    }
+        //}
     }
 }

@@ -34,12 +34,7 @@ namespace MovieList
             this.txtDirectorNameForFilter = new System.Windows.Forms.TextBox();
             this.btnAddMovieToList = new System.Windows.Forms.Button();
             this.checkedListGenresForFilter = new System.Windows.Forms.CheckedListBox();
-            this.checkBoxAscending = new System.Windows.Forms.CheckBox();
-            this.checkBoxDecending = new System.Windows.Forms.CheckBox();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.sortByCheckBox = new System.Windows.Forms.Button();
-            this.checkboxProduction = new System.Windows.Forms.CheckBox();
-            this.checkBoxRat = new System.Windows.Forms.CheckBox();
             this.listAllMovie = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -49,7 +44,7 @@ namespace MovieList
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtFilterByName = new System.Windows.Forms.TextBox();
-            this.btnFilter = new System.Windows.Forms.Button();
+            this.btnFilterAndSorting = new System.Windows.Forms.Button();
             this.toDate = new System.Windows.Forms.MaskedTextBox();
             this.fromDate = new System.Windows.Forms.MaskedTextBox();
             this.btnEditMovieFromList = new System.Windows.Forms.Button();
@@ -66,6 +61,9 @@ namespace MovieList
             this.DateProduction = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AverageRateMovie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Generes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cbSortByDateProduction = new System.Windows.Forms.CheckBox();
+            this.cbSortByAverageRate = new System.Windows.Forms.CheckBox();
+            this.cbSortDescending = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListMovie)).BeginInit();
@@ -73,16 +71,14 @@ namespace MovieList
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbSortDescending);
+            this.groupBox1.Controls.Add(this.cbSortByAverageRate);
+            this.groupBox1.Controls.Add(this.cbSortByDateProduction);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.txtDirectorNameForFilter);
             this.groupBox1.Controls.Add(this.btnAddMovieToList);
             this.groupBox1.Controls.Add(this.checkedListGenresForFilter);
-            this.groupBox1.Controls.Add(this.checkBoxAscending);
-            this.groupBox1.Controls.Add(this.checkBoxDecending);
             this.groupBox1.Controls.Add(this.btnDelete);
-            this.groupBox1.Controls.Add(this.sortByCheckBox);
-            this.groupBox1.Controls.Add(this.checkboxProduction);
-            this.groupBox1.Controls.Add(this.checkBoxRat);
             this.groupBox1.Controls.Add(this.listAllMovie);
             this.groupBox1.Controls.Add(this.btnRefresh);
             this.groupBox1.Controls.Add(this.label4);
@@ -92,7 +88,7 @@ namespace MovieList
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtFilterByName);
-            this.groupBox1.Controls.Add(this.btnFilter);
+            this.groupBox1.Controls.Add(this.btnFilterAndSorting);
             this.groupBox1.Controls.Add(this.toDate);
             this.groupBox1.Controls.Add(this.fromDate);
             this.groupBox1.Controls.Add(this.btnEditMovieFromList);
@@ -137,26 +133,6 @@ namespace MovieList
             this.checkedListGenresForFilter.Size = new System.Drawing.Size(152, 19);
             this.checkedListGenresForFilter.TabIndex = 20;
             // 
-            // checkBoxAscending
-            // 
-            this.checkBoxAscending.AutoSize = true;
-            this.checkBoxAscending.Location = new System.Drawing.Point(390, 39);
-            this.checkBoxAscending.Name = "checkBoxAscending";
-            this.checkBoxAscending.Size = new System.Drawing.Size(118, 17);
-            this.checkBoxAscending.TabIndex = 19;
-            this.checkBoxAscending.Text = "مرتب سازی صعودی";
-            this.checkBoxAscending.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxDecending
-            // 
-            this.checkBoxDecending.AutoSize = true;
-            this.checkBoxDecending.Location = new System.Drawing.Point(127, 16);
-            this.checkBoxDecending.Name = "checkBoxDecending";
-            this.checkBoxDecending.Size = new System.Drawing.Size(110, 17);
-            this.checkBoxDecending.TabIndex = 18;
-            this.checkBoxDecending.Text = "مرتب سازی نزولی";
-            this.checkBoxDecending.UseVisualStyleBackColor = true;
-            // 
             // btnDelete
             // 
             this.btnDelete.Location = new System.Drawing.Point(542, 16);
@@ -166,36 +142,6 @@ namespace MovieList
             this.btnDelete.Text = "حذف فیلم";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // sortByCheckBox
-            // 
-            this.sortByCheckBox.Location = new System.Drawing.Point(6, 12);
-            this.sortByCheckBox.Name = "sortByCheckBox";
-            this.sortByCheckBox.Size = new System.Drawing.Size(76, 23);
-            this.sortByCheckBox.TabIndex = 16;
-            this.sortByCheckBox.Text = "مرتب سازی";
-            this.sortByCheckBox.UseVisualStyleBackColor = true;
-            this.sortByCheckBox.Click += new System.EventHandler(this.sortByCheckBox_Click);
-            // 
-            // checkboxProduction
-            // 
-            this.checkboxProduction.AutoSize = true;
-            this.checkboxProduction.Location = new System.Drawing.Point(243, 16);
-            this.checkboxProduction.Name = "checkboxProduction";
-            this.checkboxProduction.Size = new System.Drawing.Size(141, 17);
-            this.checkboxProduction.TabIndex = 15;
-            this.checkboxProduction.Text = "مرتب بر اساس تاریخ تولید";
-            this.checkboxProduction.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxRat
-            // 
-            this.checkBoxRat.AutoSize = true;
-            this.checkBoxRat.Location = new System.Drawing.Point(390, 16);
-            this.checkBoxRat.Name = "checkBoxRat";
-            this.checkBoxRat.Size = new System.Drawing.Size(119, 17);
-            this.checkBoxRat.TabIndex = 14;
-            this.checkBoxRat.Text = "مرتب برا اساس امتیاز";
-            this.checkBoxRat.UseVisualStyleBackColor = true;
             // 
             // listAllMovie
             // 
@@ -209,9 +155,9 @@ namespace MovieList
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(6, 182);
+            this.btnRefresh.Location = new System.Drawing.Point(6, 152);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(86, 23);
+            this.btnRefresh.Size = new System.Drawing.Size(85, 23);
             this.btnRefresh.TabIndex = 12;
             this.btnRefresh.Text = "پاک کردن فیلتر";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -277,15 +223,15 @@ namespace MovieList
             this.txtFilterByName.Size = new System.Drawing.Size(100, 20);
             this.txtFilterByName.TabIndex = 4;
             // 
-            // btnFilter
+            // btnFilterAndSorting
             // 
-            this.btnFilter.Location = new System.Drawing.Point(97, 182);
-            this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Size = new System.Drawing.Size(76, 23);
-            this.btnFilter.TabIndex = 3;
-            this.btnFilter.Text = "فیلتر";
-            this.btnFilter.UseVisualStyleBackColor = true;
-            this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
+            this.btnFilterAndSorting.Location = new System.Drawing.Point(6, 181);
+            this.btnFilterAndSorting.Name = "btnFilterAndSorting";
+            this.btnFilterAndSorting.Size = new System.Drawing.Size(107, 23);
+            this.btnFilterAndSorting.TabIndex = 3;
+            this.btnFilterAndSorting.Text = "فیلتر و مرتب سازی";
+            this.btnFilterAndSorting.UseVisualStyleBackColor = true;
+            this.btnFilterAndSorting.Click += new System.EventHandler(this.btnFilter_Click);
             // 
             // toDate
             // 
@@ -437,6 +383,36 @@ namespace MovieList
             this.Generes.Name = "Generes";
             this.Generes.ReadOnly = true;
             // 
+            // cbSortByDateProduction
+            // 
+            this.cbSortByDateProduction.AutoSize = true;
+            this.cbSortByDateProduction.Location = new System.Drawing.Point(357, 16);
+            this.cbSortByDateProduction.Name = "cbSortByDateProduction";
+            this.cbSortByDateProduction.Size = new System.Drawing.Size(141, 17);
+            this.cbSortByDateProduction.TabIndex = 24;
+            this.cbSortByDateProduction.Text = "مرتب بر اساس تاریخ تولید";
+            this.cbSortByDateProduction.UseVisualStyleBackColor = true;
+            // 
+            // cbSortByAverageRate
+            // 
+            this.cbSortByAverageRate.AutoSize = true;
+            this.cbSortByAverageRate.Location = new System.Drawing.Point(164, 16);
+            this.cbSortByAverageRate.Name = "cbSortByAverageRate";
+            this.cbSortByAverageRate.Size = new System.Drawing.Size(151, 17);
+            this.cbSortByAverageRate.TabIndex = 25;
+            this.cbSortByAverageRate.Text = "مرتب براساس میانگین امتیاز";
+            this.cbSortByAverageRate.UseVisualStyleBackColor = true;
+            // 
+            // cbSortDescending
+            // 
+            this.cbSortDescending.AutoSize = true;
+            this.cbSortDescending.Location = new System.Drawing.Point(17, 16);
+            this.cbSortDescending.Name = "cbSortDescending";
+            this.cbSortDescending.Size = new System.Drawing.Size(110, 17);
+            this.cbSortDescending.TabIndex = 26;
+            this.cbSortDescending.Text = "مرتب سازی نزولی";
+            this.cbSortDescending.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -461,7 +437,7 @@ namespace MovieList
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button btnFilter;
+        private System.Windows.Forms.Button btnFilterAndSorting;
         private System.Windows.Forms.MaskedTextBox toDate;
         private System.Windows.Forms.MaskedTextBox fromDate;
         private System.Windows.Forms.Button btnEditMovieFromList;
@@ -475,12 +451,7 @@ namespace MovieList
         private System.Windows.Forms.Label lbl3;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button listAllMovie;
-        private System.Windows.Forms.Button sortByCheckBox;
-        private System.Windows.Forms.CheckBox checkboxProduction;
-        private System.Windows.Forms.CheckBox checkBoxRat;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.CheckBox checkBoxAscending;
-        private System.Windows.Forms.CheckBox checkBoxDecending;
         private System.Windows.Forms.CheckedListBox checkedListGenresForFilter;
         private System.Windows.Forms.Button btnAddMovieToList;
         private System.Windows.Forms.DataGridViewTextBoxColumn MovieId;
@@ -496,6 +467,9 @@ namespace MovieList
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cmbSelectResultShow;
         private System.Windows.Forms.Button txtShowResultInPages;
+        private System.Windows.Forms.CheckBox cbSortDescending;
+        private System.Windows.Forms.CheckBox cbSortByAverageRate;
+        private System.Windows.Forms.CheckBox cbSortByDateProduction;
     }
 }
 

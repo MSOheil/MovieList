@@ -1,4 +1,5 @@
-﻿using Movie.ViewModel.ViewModel;
+﻿using Movie.ViewModel.Model;
+using Movie.ViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,26 +10,14 @@ namespace Movie.DataLayer.Repositories
 {
     public interface IMovieList
     {
-
-        List<RateMovieViewModel> SortedByProductionDateAscending();
-        List<RateMovieViewModel> SortedByProductionDateDecending();
-        List<RateMovieViewModel> SortedByAverageRateAscending();
-        List<RateMovieViewModel> SortedByAverageRateDescending();
-
-
-
-
-        IEnumerable<int> GetAllGenresByMovieId(int movieId);
-        IEnumerable<RateMovieViewModel> GetAllMovie();
-        List<RateMovieViewModel> GetAllMovieByIdGenres(int genresId);
+        int GetAllMovie();
+        List<RateMovieViewModel> FilterAndSortAndPaging
+            (int pageNumber, int ResultPerPage , string movieName, string directorName, double averageRateInput, int fromDate, int toDate, int idGenres, bool sortDate, bool sortAverage, bool sortDescending);
         IEnumerable<CommentModel> GetCommentWithMoviId(int movieId);
         IEnumerable<GetNameGenresViewModel> GetNameGenres();
-        IEnumerable<RateMovieViewModel> GetMovieByName(string movieName);
-        double GetAverageRateMovie(int movieId);
         IEnumerable<CommentViewModel> GetAllComment(int movieId);
         IEnumerable<Genre> GetMovieByGenresName(string genresName);
-        List<RateMovieViewModel> GetMovieByDirectorName(string directorName);
-
+        List<int> GetAllGenresByMovieId(int movieId);
 
 
 
@@ -44,11 +33,13 @@ namespace Movie.DataLayer.Repositories
 
         bool DeleteMovie(MovieModel movieModel);
         bool DeleteMovie(int movieId);
+        bool DeleteGenresToMovie(GenresToMovie genrestomovie);
 
 
 
 
 
+        List<int> FindeGenresToMovieId(int movieId);
         string FindNameById(int movieId);
         MovieModel FindById(int movieId);
         CommentModel FindByIdComment(int movieId);
@@ -58,6 +49,7 @@ namespace Movie.DataLayer.Repositories
 
 
         bool UpDateMovie(MovieModel movie);
+        bool UpdateGenres(GenresToMovie genre);
 
     }
 }

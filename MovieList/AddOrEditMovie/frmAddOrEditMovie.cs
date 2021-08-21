@@ -28,6 +28,34 @@ namespace MovieList
 
                 using (UnitOfWork db = new UnitOfWork())
                 {
+                    var genrestomovieid = 0;
+                    foreach (var idgenres in db.MovieList.GetAllGenresByMovieId(MovieId))
+                    {
+                        foreach (var item in db.MovieList.FindeGenresToMovieId(MovieId))
+                        {
+                            genrestomovieid = item;
+                            GenresToMovie genre = new GenresToMovie()
+                            {
+                                GenresId = idgenres,
+                                MovieId = MovieId,
+                                GenresToMovieId = genrestomovieid
+                            };
+                            db.MovieList.DeleteGenresToMovie(genre);
+                        }
+                    }
+
+                    foreach (var ListBoxItem in checkedListGenresBySelectMovie.CheckedItems)
+                    {
+                        var id = Convert.ToInt32((checkedListGenresBySelectMovie.Items.IndexOf(ListBoxItem)).ToString());
+                        GenresToMovie genres = new GenresToMovie()
+                        {
+                            GenresId = id,
+                            MovieId = MovieId,
+                            GenresToMovieId = genrestomovieid
+                        };
+
+                        db.MovieList.InsertGenres(genres);
+                    }
                     MovieModel EditMovie = new MovieModel()
                     {
                         MovieName = txtMovieName.Text,
@@ -35,27 +63,19 @@ namespace MovieList
                         DateProduction = Convert.ToInt32(txtProductionDateMovie.Text),
                         MovieID = MovieId,
                     };
-                    GenresToMovie genre = new GenresToMovie()
-                    {
-                        GenresId = (int)checkedListGenresBySelectMovie.SelectedValue,
-                        MovieId = MovieId
-                    };
 
                     db.MovieList.UpDateMovie(EditMovie);
-                    db.MovieList.InsertGenres(genre);
                     db.Save();
                 }
                 DialogResult = DialogResult.OK;
             }
             else
             {
-
                 if (IsValid())
                 {
                     using (UnitOfWork db = new UnitOfWork())
                     {
                         var year = txtProductionDateMovie.Text;
-
 
                         MovieModel movie = new MovieModel()
                         {
@@ -63,11 +83,13 @@ namespace MovieList
                             DirectorName = txtDirectorName.Text,
                             DateProduction = Convert.ToInt32(txtProductionDateMovie.Text)
                         };
-                        foreach (var ListBoxItem in checkedListGenresBySelectMovie.CheckedIndices)
+                        foreach (var ListBoxItem in checkedListGenresBySelectMovie.CheckedItems)
                         {
+                            var id = Convert.ToInt32((checkedListGenresBySelectMovie.Items.IndexOf(ListBoxItem)).ToString());
+
                             GenresToMovie genre = new GenresToMovie()
                             {
-                                GenresId = (int)ListBoxItem
+                                GenresId = id,
                             };
                             db.MovieList.InsertGenres(genre);
                         }
@@ -123,7 +145,7 @@ namespace MovieList
                     var idexGenres = db.MovieList.GetAllGenresByMovieId(MovieId);
                     foreach (var item in idexGenres)
                     {
-                        checkedListGenresBySelectMovie.SetItemChecked(item,true);
+                        checkedListGenresBySelectMovie.SetItemChecked(item, true);
                     }
                     var movie = db.MovieList.FindById(MovieId);
                     txtDirectorName.Text = movie.DirectorName;
@@ -131,7 +153,7 @@ namespace MovieList
                     txtProductionDateMovie.Text = movie.DateProduction.ToString();
                 }
             }
-          
+
 
         }
 

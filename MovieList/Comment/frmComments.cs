@@ -35,20 +35,23 @@ namespace MovieList
             {
                 BindGrid();
             }
+            DialogResult = DialogResult.OK;
         }
         private void BindGrid()
         {
             using (UnitOfWork db = new UnitOfWork())
             {
+                int fromDateInputFromUser = 1;
+                double rateInputFromUser = 0;
+                int toDateInputFromUser = 10000;
+                string directorName = null;
+                string movieName = null;
                 dgvComment.AutoGenerateColumns = false;
                 dgvComment.DataSource = db.MovieList.GetAllComment(MovieId);
                 var comm = db.MovieList.GetAllComment(MovieId);
                 if (comm.Count() != 0)
                 {
-                    var ave = db.MovieList.GetAverageRateMovie(MovieId);
-                    txtMovieRate.Text = Convert.ToString(Math.Round(ave, 2));
-                    RateMovieViewModel rate = new RateMovieViewModel();
-                    rate.MovieAverageRateByRateUsers = Convert.ToDouble(Math.Round(ave, 2));
+                    var ave = db.MovieList.FilterAndSortAndPaging(1, 1000, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, 0, false, false, false);
                 }
             }
         }

@@ -52,6 +52,7 @@ namespace MovieList
                 }
             }
 
+
         }
 
         private void dgvListMovie_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -87,58 +88,103 @@ namespace MovieList
         }
         private void Filter()
         {
-            int? startDate;
-            int? endDate;
+            result.Clear();
+            int fromDateInputFromUser = 1;
+            double rateInputFromUser = 0;
+            int toDateInputFromUser = 10000;
+            string directorName = null;
+            string movieName = null;
+            if (txtFilterByRate.Text != "")
+            {
+
+                rateInputFromUser = Convert.ToDouble(txtFilterByRate.Text);
+            }
+            if (fromDate.Text != "")
+            {
+
+                fromDateInputFromUser = Convert.ToInt32(fromDate.Text);
+            }
+            if (toDate.Text != "")
+            {
+                toDateInputFromUser = Convert.ToInt32(toDate.Text);
+
+            }
+            if (txtDirectorNameForFilter.Text != "")
+            {
+                directorName = txtDirectorNameForFilter.Text;
+            }
+            if (txtFilterByName.Text != "")
+            {
+                movieName = txtFilterByName.Text;
+            }
+
+            int idCheckeItem = 0;
+
             using (UnitOfWork db = new UnitOfWork())
             {
-                if (txtFilterByName.Text != "")
+                if (checkedListGenresForFilter.CheckedItems.Count >= 1)
                 {
-                    result = db.MovieList.GetMovieByName(txtFilterByName.Text).Distinct().ToList();
-                }
-
-
-                if (checkedListGenresForFilter.CheckedItems.Count!= 0)
-                {
-                    var listMovieByFilterGenres = new List<RateMovieViewModel>();
-
                     foreach (var iditemchecked in checkedListGenresForFilter.CheckedItems)
                     {
-                        var idCheckeItem = checkedListGenresForFilter.Items.IndexOf(iditemchecked).ToString();
-                        var id = db.MovieList.FindNameGenresByIdGenres(Convert.ToInt32(idCheckeItem));
-                        foreach (var nameGenres in id)
-                        {
-                            var movieFilterByGenres = FilterByIdGenres(nameGenres);
-
-                            listMovieByFilterGenres.AddRange(movieFilterByGenres);
-                        }
+                        idCheckeItem = Convert.ToInt32(checkedListGenresForFilter.Items.IndexOf(iditemchecked).ToString());
+                        result.AddRange(db.MovieList.FilterAndSortAndPaging
+                     (1, 1000, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, false, false, false));
                     }
-                    result = listMovieByFilterGenres.ToList();
                 }
-                if (fromDate.Text != "")
+                else
                 {
+                    result = db.MovieList.FilterAndSortAndPaging
+               (1, 1000, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, false, false, false);
+                }
+                if (cbSortByAverageRate.Checked)
+                {
+                    result = result.OrderBy(a => a.MovieAverageRateByRateUsers).ToList();
+                }
+                if (cbSortByDateProduction.Checked)
+                {
+                    if (result != null)
+                    {
+                        result = result.OrderBy(a => a.ProductionDate).ToList();
+                    }
+                    else
+                    {
+                        result = db.MovieList.FilterAndSortAndPaging
+             (1, 1000, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, true, false, false);
+                    }
 
-                    startDate = Convert.ToInt32(fromDate.Text);
-                    var resultMovie = FilterFromDate(startDate.Value);
-                    result = resultMovie.ToList();
                 }
-                if (toDate.Text != "")
+                if (cbSortDescending.Checked)
                 {
-                    endDate = Convert.ToInt32(toDate.Text);
-                    var resultMovie = FilterToDate(endDate.Value);
-                    result = resultMovie.ToList();
+                    if (cbSortByAverageRate.Checked)
+                    {
+                        result = result.OrderByDescending(a => a.MovieAverageRateByRateUsers).ToList();
+                    }
+                    else if (cbSortByDateProduction.Checked && cbSortDescending.Checked == true)
+                    {
+                        if (result != null)
+                        {
+                            result = result.OrderByDescending(a => a.ProductionDate).ToList();
+                        }
+                        else
+                        {
+                            result = db.MovieList.FilterAndSortAndPaging
+          (1, 1000, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, true, false, true);
+                        }
+                        
+                    }
+                    else
+                    {
+                        result = db.MovieList.FilterAndSortAndPaging
+            (1, 1000, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, false, false, true);
+                    }
+
                 }
-                if (txtDirectorNameForFilter.Text != "")
-                {
-                    var resultMovie = FilterByDirectorName(txtDirectorNameForFilter.Text);
-                    result = resultMovie.ToList();
-                }
-                if (txtFilterByRate.Text != "")
-                {
-                    var rateInput = Convert.ToInt32(txtFilterByRate.Text);
-                    var resultMovie = FilterByRate(rateInput);
-                    result = resultMovie.ToList();
-                }
-                dgvListMovie.DataSource = result.Distinct(new EqualityComparer()).ToList();
+
+
+                result = result.Distinct(new EqualityComparer()).ToList();
+                dgvListMovie.DataSource = result;
+
+
 
             }
         }
@@ -154,93 +200,19 @@ namespace MovieList
 
         private void listAllMovie_Click(object sender, EventArgs e)
         {
-
-            int sizePage = Convert.ToInt32(cmbSelectResultShow.SelectedItem);
-            int pageNumber = Convert.ToInt32(cmbSelectPage.SelectedItem);
-            if (sizePage == 0)
-            {
-                sizePage += 5;
-            }
-            if (pageNumber == 1)
-            {
-                pageNumber -= 1;
-            }
+            int fromDateInputFromUser = 1;
+            double rateInputFromUser = 0;
+            int toDateInputFromUser = 10000;
+            string directorName = null;
+            string movieName = null;
             using (UnitOfWork db = new UnitOfWork())
             {
                 dgvListMovie.AutoGenerateColumns = false;
-                result = DataGridViewPages.ShowResultInPages(pageNumber, sizePage);
-                dgvListMovie.DataSource = result;
+                dgvListMovie.DataSource = db.MovieList.FilterAndSortAndPaging
+                    (1, 1000, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, 0, false, false, false);
             }
         }
-        private void sortByCheckBox_Click(object sender, EventArgs e)
-        {
-            using (UnitOfWork db = new UnitOfWork())
-            {
 
-                if (checkboxProduction.Checked)
-                {
-                    if (result.Count == 0)
-                    {
-                        result = db.MovieList.SortedByProductionDateAscending();
-                        dgvListMovie.DataSource = result;
-
-                    }
-                    else
-                    {
-                        result = result.OrderBy(s => s.ProductionDate).ToList();
-
-                    }
-                    if (checkBoxAscending.Checked)
-                    {
-                        result = result.OrderBy(s => s.ProductionDate).ToList();
-
-
-                    }
-                    if (checkBoxDecending.Checked)
-                    {
-
-                        result = result.OrderByDescending(s => s.ProductionDate).ToList();
-
-                    }
-                }
-                if (checkBoxRat.Checked)
-                {
-                    if (result.Count == 0)
-                    {
-                        result = db.MovieList.SortedByAverageRateAscending();
-                    }
-                    else
-                    {
-                        result = result.OrderBy(s => s.ProductionDate).ToList();
-                    }
-                    if (checkBoxAscending.Checked)
-                    {
-                        if (result.Count == 0)
-                        {
-                            result = db.MovieList.SortedByAverageRateAscending();
-                        }
-                        else
-                        {
-                            result = result.OrderBy(s => s.ProductionDate).ToList();
-                        }
-                    }
-                    if (checkBoxDecending.Checked)
-                    {
-
-                        if (result.Count == 0)
-                        {
-                            result = db.MovieList.SortedByAverageRateDescending();
-                        }
-                        else
-                        {
-                            result = result.OrderByDescending(s => s.ProductionDate).ToList();
-                        }
-                    }
-                }
-
-                dgvListMovie.DataSource = result;
-            }
-        }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
@@ -266,26 +238,21 @@ namespace MovieList
 
         public void BindGrid()
         {
+            int fromDateInputFromUser = 1;
+            double rateInputFromUser = 0;
+            int toDateInputFromUser = 10000;
+            string directorName = null;
+            string movieName = null;
 
             int sizePage = Convert.ToInt32(cmbSelectResultShow.SelectedItem);
             int pageNumber = Convert.ToInt32(cmbSelectPage.SelectedItem);
-            if (sizePage == 0)
-            {
-                sizePage += 5;
-            }
-            if (pageNumber == 1)
-            {
-                pageNumber -= 1;
-            }
-            if (sizePage > 5)
-            {
-                sizePage =5;
-            }
+            sizePage = DataGridViewPages.ResultController(sizePage);
+            pageNumber = DataGridViewPages.PageNumberController(pageNumber);
             using (UnitOfWork db = new UnitOfWork())
             {
                 dgvListMovie.AutoGenerateColumns = false;
-                result = DataGridViewPages.ShowResultInPages(pageNumber, sizePage);
-                dgvListMovie.DataSource = result;
+                dgvListMovie.DataSource = db.MovieList.FilterAndSortAndPaging
+                    (pageNumber, sizePage, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, 0, false, false, false);
             }
         }
 
@@ -303,85 +270,6 @@ namespace MovieList
         {
             BindGrid();
         }
-        private List<RateMovieViewModel> FilterByIdGenres(string nameGenresForFilter)
-        {
 
-
-            var movie = result.Where(sd => sd.GenresNamee.Contains(nameGenresForFilter))
-                .Select(s => new RateMovieViewModel
-                {
-                    MovieId = s.MovieId,
-                    DirectorName = s.DirectorName,
-                    GenresNamee = s.GenresNamee,
-                    MovieAverageRateByRateUsers = s.MovieAverageRateByRateUsers,
-                    MovieNamee = s.MovieNamee,
-                    ProductionDate = s.ProductionDate
-                }).ToList();
-            return movie.ToList();
-        }
-        private List<RateMovieViewModel> FilterFromDate(int fromDate)
-        {
-
-
-            var movie = result.Where(sd => sd.ProductionDate >= fromDate)
-                .Select(s => new RateMovieViewModel
-                {
-                    MovieId = s.MovieId,
-                    DirectorName = s.DirectorName,
-                    GenresNamee = s.GenresNamee,
-                    MovieAverageRateByRateUsers = s.MovieAverageRateByRateUsers,
-                    MovieNamee = s.MovieNamee,
-                    ProductionDate = s.ProductionDate
-                }).ToList();
-            return movie.ToList();
-        }
-        private List<RateMovieViewModel> FilterToDate(int fromDate)
-        {
-
-
-            var movie = result.Where(sd => sd.ProductionDate <= fromDate)
-                .Select(s => new RateMovieViewModel
-                {
-                    MovieId = s.MovieId,
-                    DirectorName = s.DirectorName,
-                    GenresNamee = s.GenresNamee,
-                    MovieAverageRateByRateUsers = s.MovieAverageRateByRateUsers,
-                    MovieNamee = s.MovieNamee,
-                    ProductionDate = s.ProductionDate
-                }).ToList();
-            return movie.ToList();
-        }
-        private List<RateMovieViewModel> FilterByDirectorName(string directorName)
-        {
-
-
-            var movie = result.Where(sd => sd.DirectorName == directorName)
-                .Select(s => new RateMovieViewModel
-                {
-                    MovieId = s.MovieId,
-                    DirectorName = s.DirectorName,
-                    GenresNamee = s.GenresNamee,
-                    MovieAverageRateByRateUsers = s.MovieAverageRateByRateUsers,
-                    MovieNamee = s.MovieNamee,
-                    ProductionDate = s.ProductionDate
-                }).ToList();
-            return movie.ToList();
-        }
-        private List<RateMovieViewModel> FilterByRate(int rateInput)
-        {
-
-
-            var movie = result.Where(sd => sd.MovieAverageRateByRateUsers >= rateInput)
-                .Select(s => new RateMovieViewModel
-                {
-                    MovieId = s.MovieId,
-                    DirectorName = s.DirectorName,
-                    GenresNamee = s.GenresNamee,
-                    MovieAverageRateByRateUsers = s.MovieAverageRateByRateUsers,
-                    MovieNamee = s.MovieNamee,
-                    ProductionDate = s.ProductionDate
-                }).ToList();
-            return movie.ToList();
-        }
     }
 }

@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Movie.ViewModel.ViewModel
+namespace Movie.ViewModel.Model
 {
-    public class RateMovieViewModel
+    public class MovieDTO
     {
         public int MovieId { get; set; }
         public string MovieNamee { get; set; }
-        public double MovieAverageRateByRateUsers { get; set; }
+        public IEnumerable<double> MovieAverageRateByRateUsers { get; set; }
         public int ProductionDate { get; set; }
         public string DirectorName { get; set; }
         public string GenresNamee { get; set; }
