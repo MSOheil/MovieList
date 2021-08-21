@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace Movie.DataLayer.Repositories
 {
-    public interface IMovieList
+    public interface IMovieListRepository
     {
         int GetAllMovie();
         List<RateMovieViewModel> FilterAndSortAndPaging
-            (int pageNumber, int ResultPerPage , string movieName, string directorName, double averageRateInput, int fromDate, int toDate, int idGenres, bool sortDate, bool sortAverage, bool sortDescending);
+            (int pageNumber=1, int ResultPerPage =1000, string movieName=null, string directorName = null,
+            int fromDate = 1, int toDate= 10000, int idGenres=0, bool sortDate =false, bool sortAverage=false, bool sortDescending=false,
+            double filterByAverageRate = 0);
         IEnumerable<CommentModel> GetCommentWithMoviId(int movieId);
         IEnumerable<GetNameGenresViewModel> GetNameGenres();
         IEnumerable<CommentViewModel> GetAllComment(int movieId);

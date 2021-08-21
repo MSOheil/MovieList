@@ -25,13 +25,14 @@ namespace MovieList
 
             if (MovieId > 0)
             {
-
                 using (UnitOfWork db = new UnitOfWork())
                 {
+                    var genresIdByMovieId = db.MovieList.GetAllGenresByMovieId(MovieId);
+                    var findeGenreToMovieId = db.MovieList.FindeGenresToMovieId(MovieId);
                     var genrestomovieid = 0;
-                    foreach (var idgenres in db.MovieList.GetAllGenresByMovieId(MovieId))
+                    foreach (var idgenres in genresIdByMovieId)
                     {
-                        foreach (var item in db.MovieList.FindeGenresToMovieId(MovieId))
+                        foreach (var item in findeGenreToMovieId)
                         {
                             genrestomovieid = item;
                             GenresToMovie genre = new GenresToMovie()

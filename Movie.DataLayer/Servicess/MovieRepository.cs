@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace Movie.DataLayer.Servicess
 {
-    public class MovieList : IMovieList
+    public class MovieRepository : IMovieListRepository
     {
         private MovieContext_DBEntities8 _db;
 
-        public MovieList(MovieContext_DBEntities8 context)
+        public MovieRepository(MovieContext_DBEntities8 context)
         {
             _db = context;
         }
@@ -170,11 +170,11 @@ namespace Movie.DataLayer.Servicess
 
         private double AverageRate(IEnumerable<double> rate)
         {
-            var averageRateMovie = rate.DefaultIfEmpty().Average();
+            var averageRateMovie = rate.AsQueryable().DefaultIfEmpty().Average();
             return Convert.ToDouble(averageRateMovie);
         }
         private IQueryable<MovieModel> PagingByTakeAndSkip(int pageNumber, int ResultPerPage, string movieName, string directorName, int fromDate, int toDate, int idGenres
-            , bool sortDate, bool sortAverage, bool sortDescending)
+            , bool sortDate, bool sortAverage, bool sortDescending, double filterByAverageRate = 0)
         {
             var movieFilterAndSorting = _db.MovieModels.AsNoTracking().AsQueryable();
             if (idGenres != 0)
@@ -193,15 +193,23 @@ namespace Movie.DataLayer.Servicess
             {
                 movieFilterAndSorting = movieFilterAndSorting.Where(s => s.DateProduction >= fromDate && s.DateProduction <= toDate);
             }
+            if (fromDate == 1 && toDate != 10000)
+            {
+                movieFilterAndSorting = movieFilterAndSorting.Where(s => s.DateProduction >= fromDate && s.DateProduction <= toDate);
+            }
+            if (fromDate != 1 && toDate == 10000)
+            {
+                movieFilterAndSorting = movieFilterAndSorting.Where(s => s.DateProduction >= fromDate && s.DateProduction <= toDate);
+            }
             movieFilterAndSorting = movieFilterAndSorting.OrderBy(a => a.MovieID);
             if (sortDate == true)
             {
                 movieFilterAndSorting = movieFilterAndSorting.OrderBy(a => a.DateProduction);
             }
-            //if (sortAverage == true)
-            //{
-            //    movieFilterAndSorting = movieFilterAndSorting.OrderBy(a => a.CommentModels.Select(s=>s.CommentRat)).Skip(ResultPerPage * (pageNumber - 1)).Take(ResultPerPage);
-            //}
+            if (filterByAverageRate > 0)
+            {
+                movieFilterAndSorting = movieFilterAndSorting.AsEnumerable().Where(a => AverageRate(a.CommentModels.Select(s => s.CommentRat)) >= filterByAverageRate).AsQueryable();
+            }
             if (sortDescending == true)
             {
                 movieFilterAndSorting = movieFilterAndSorting.OrderByDescending(a => a.MovieID);
@@ -210,25 +218,31 @@ namespace Movie.DataLayer.Servicess
             {
                 movieFilterAndSorting = movieFilterAndSorting.OrderByDescending(a => a.DateProduction);
             }
-
+            if (sortAverage == true)
+            {
+                movieFilterAndSorting = movieFilterAndSorting.AsEnumerable().OrderBy(a => AverageRate(a.CommentModels.Select(s => s.CommentRat))).AsQueryable();
+            }
+            if (sortAverage == true && sortDescending == true)
+            {
+                movieFilterAndSorting = movieFilterAndSorting.AsEnumerable().OrderByDescending(a => AverageRate(a.CommentModels.Select(s => s.CommentRat).ToList())).AsQueryable();
+            }
             return movieFilterAndSorting.Skip(ResultPerPage * (pageNumber - 1)).Take(ResultPerPage);
         }
-        public List<RateMovieViewModel> FilterAndSortAndPaging(int pageNumber, int ResultPerPage, string movieName, string directorName, double averageRateInput, int fromDate, int toDate,
-            int idGenres, bool sortDate, bool sortAverage, bool sortDescending)
+        public List<RateMovieViewModel> FilterAndSortAndPaging(int pageNumber = 1, int ResultPerPage = 1000, string movieName = null, string directorName = null,
+           int fromDate = 1, int toDate = 10000, int idGenres = 0, bool sortDate = false, bool sortAverage = false, bool sortDescending = false, double filterByAverageRate = 0)
         {
-            var movie = PagingByTakeAndSkip(pageNumber, ResultPerPage, movieName, directorName, fromDate, toDate, idGenres, sortDate, sortAverage, sortDescending);
+            var movie = PagingByTakeAndSkip(pageNumber, ResultPerPage, movieName, directorName, fromDate, toDate, idGenres, sortDate, sortAverage, sortDescending, filterByAverageRate);
             var vm = movie.AsEnumerable().Select(a => new RateMovieViewModel
             {
                 DirectorName = a.DirectorName,
                 GenresNamee = ConvertMembersListTOstring.ConvertListToString(a.GenresToMovies.Select(d => d.Genre.GenresName)),
-                MovieAverageRateByRateUsers = AverageRate(a.CommentModels.Select(d => d.CommentRat)),
+                MovieAverageRateByRateUsers = AverageRate(a.CommentModels.Select(d => d.CommentRat).AsQueryable()),
                 MovieId = a.MovieID,
                 MovieNamee = a.MovieName,
                 ProductionDate = a.DateProduction
 
-            }).Where(s => s.MovieAverageRateByRateUsers >= averageRateInput);
+            });
             return vm.ToList();
-
         }
 
         public int GetAllMovie()
@@ -273,5 +287,7 @@ namespace Movie.DataLayer.Servicess
                 return false;
             }
         }
+
+
     }
 }

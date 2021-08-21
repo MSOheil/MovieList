@@ -13,14 +13,14 @@ namespace Movie.DataLayer.Data
     {
 
         MovieContext_DBEntities8 db = new MovieContext_DBEntities8();
-        private IMovieList _movieList;
-        public IMovieList MovieList
+        private IMovieListRepository _movieList;
+        public IMovieListRepository MovieList
         {
             get
             {
                 if (_movieList == null)
                 {
-                    _movieList = new MovieList(db);
+                    _movieList = new MovieRepository(db);
                 }
                 return _movieList;
             }

@@ -51,7 +51,7 @@ namespace MovieList
                 var comm = db.MovieList.GetAllComment(MovieId);
                 if (comm.Count() != 0)
                 {
-                    var ave = db.MovieList.FilterAndSortAndPaging(1, 1000, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, 0, false, false, false);
+                    var ave = db.MovieList.FilterAndSortAndPaging(1, 1000, movieName, directorName, fromDateInputFromUser, toDateInputFromUser, 0, false, false, false, rateInputFromUser);
                 }
             }
         }

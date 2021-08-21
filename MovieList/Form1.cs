@@ -122,63 +122,37 @@ namespace MovieList
 
             using (UnitOfWork db = new UnitOfWork())
             {
-                if (checkedListGenresForFilter.CheckedItems.Count >= 1)
+
+                foreach (var iditemchecked in checkedListGenresForFilter.CheckedItems)
                 {
-                    foreach (var iditemchecked in checkedListGenresForFilter.CheckedItems)
-                    {
-                        idCheckeItem = Convert.ToInt32(checkedListGenresForFilter.Items.IndexOf(iditemchecked).ToString());
-                        result.AddRange(db.MovieList.FilterAndSortAndPaging
-                     (1, 1000, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, false, false, false));
-                    }
+                    idCheckeItem = Convert.ToInt32(checkedListGenresForFilter.Items.IndexOf(iditemchecked).ToString());
+                    result.AddRange(db.MovieList.FilterAndSortAndPaging
+                     (1, 1000, movieName, directorName, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, false, false, false, rateInputFromUser));
                 }
-                else
-                {
-                    result = db.MovieList.FilterAndSortAndPaging
-               (1, 1000, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, false, false, false);
-                }
+
+                result = db.MovieList.FilterAndSortAndPaging
+                  (1, 1000, movieName, directorName, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, false, false, false, rateInputFromUser);
                 if (cbSortByAverageRate.Checked)
                 {
-                    result = result.OrderBy(a => a.MovieAverageRateByRateUsers).ToList();
+                    result = db.MovieList.FilterAndSortAndPaging
+                 (1, 1000, movieName, directorName, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, false, true, false, rateInputFromUser);
                 }
                 if (cbSortByDateProduction.Checked)
                 {
-                    if (result != null)
-                    {
-                        result = result.OrderBy(a => a.ProductionDate).ToList();
-                    }
-                    else
-                    {
-                        result = db.MovieList.FilterAndSortAndPaging
-             (1, 1000, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, true, false, false);
-                    }
-
+                    result = db.MovieList.FilterAndSortAndPaging
+                 (1, 1000, movieName, directorName, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, true, false, false, rateInputFromUser);
                 }
-                if (cbSortDescending.Checked)
+                if (cbSortByAverageRate.Checked && cbSortDescending.Checked)
                 {
-                    if (cbSortByAverageRate.Checked)
-                    {
-                        result = result.OrderByDescending(a => a.MovieAverageRateByRateUsers).ToList();
-                    }
-                    else if (cbSortByDateProduction.Checked && cbSortDescending.Checked == true)
-                    {
-                        if (result != null)
-                        {
-                            result = result.OrderByDescending(a => a.ProductionDate).ToList();
-                        }
-                        else
-                        {
-                            result = db.MovieList.FilterAndSortAndPaging
-          (1, 1000, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, true, false, true);
-                        }
-                        
-                    }
-                    else
-                    {
-                        result = db.MovieList.FilterAndSortAndPaging
-            (1, 1000, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, false, false, true);
-                    }
-
+                    result = db.MovieList.FilterAndSortAndPaging
+                (1, 1000, movieName, directorName, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, false, true, true, rateInputFromUser);
                 }
+                if (cbSortByDateProduction.Checked && cbSortDescending.Checked)
+                {
+                    result = db.MovieList.FilterAndSortAndPaging
+                 (1, 1000, movieName, directorName, fromDateInputFromUser, toDateInputFromUser, idCheckeItem, true, false, true, rateInputFromUser);
+                }
+
 
 
                 result = result.Distinct(new EqualityComparer()).ToList();
@@ -200,16 +174,12 @@ namespace MovieList
 
         private void listAllMovie_Click(object sender, EventArgs e)
         {
-            int fromDateInputFromUser = 1;
-            double rateInputFromUser = 0;
-            int toDateInputFromUser = 10000;
-            string directorName = null;
-            string movieName = null;
+
             using (UnitOfWork db = new UnitOfWork())
             {
                 dgvListMovie.AutoGenerateColumns = false;
                 dgvListMovie.DataSource = db.MovieList.FilterAndSortAndPaging
-                    (1, 1000, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, 0, false, false, false);
+                    ();
             }
         }
 
@@ -238,11 +208,6 @@ namespace MovieList
 
         public void BindGrid()
         {
-            int fromDateInputFromUser = 1;
-            double rateInputFromUser = 0;
-            int toDateInputFromUser = 10000;
-            string directorName = null;
-            string movieName = null;
 
             int sizePage = Convert.ToInt32(cmbSelectResultShow.SelectedItem);
             int pageNumber = Convert.ToInt32(cmbSelectPage.SelectedItem);
@@ -252,7 +217,7 @@ namespace MovieList
             {
                 dgvListMovie.AutoGenerateColumns = false;
                 dgvListMovie.DataSource = db.MovieList.FilterAndSortAndPaging
-                    (pageNumber, sizePage, movieName, directorName, rateInputFromUser, fromDateInputFromUser, toDateInputFromUser, 0, false, false, false);
+                    (pageNumber, sizePage);
             }
         }
 
